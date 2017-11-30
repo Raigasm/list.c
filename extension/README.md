@@ -22,10 +22,10 @@ make
 ## Running Tests
 
 - We need some files to search from, so run `test_files/create_files.sh` to create 100 tiny text files with random names.
-- `make test && ./test`
+- `make test && ./findfile`
 
 ## Libraries Used
-- [Minunit (for unit testing)](https://github.com/siu/minunit) 
+- [Minunit (for unit testing)](http://www.jera.com/techinfo/jtns/jtn002.html) 
 - [tinydir (very small platform agnostic C directory and file reader)](https://github.com/cxong/tinydir)
 
 

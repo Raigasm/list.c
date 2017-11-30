@@ -5,7 +5,7 @@
 // represents each file
 typedef struct FileInfo
 {
-  char *filename; // filename with extension
+  char *name; // filename with extension
   char *path;     // full file path
 } fileInfo;
 

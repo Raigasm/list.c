@@ -2,17 +2,20 @@
   "cSpell.words": ["findfile"],
   "files.associations": {
     "list.h": "c",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "iterator": "c",
+    "string": "c",
+    "string_view": "c"
   },
   "saveAndRun": {
     "commands": [
       {
         "match": ".c",
-        "cmd": "echo 'running tests' && gcc test.c -lm -o test && ./test && git status"
+        "cmd": "make test && ./findfile"
       },
       {
         "match": ".h",
-        "cmd": "echo 'running tests' && gcc test.c -lm -o test && ./test && git status"
+        "cmd": "make test && ./findfile"
       }
     ]
   }

@@ -8,11 +8,14 @@ CFLAGS = -g -Wall -o3 -std=c99
 
 default: all
 
-all: list.o test.o
-	$(CC) $(CFLAGS) -o list list.o test.o
+all: findfile.o main.o 
+	$(CC) $(CFLAGS) -o findfile findfile.o main.o 
 
-list.o: debugprint.h minunit.h list.h list.c
-	$(CC) $(CFLAGS) -o list.o list.c -c
+test: findfile.o test.o
+	$(CC) $(CFLAGS) -o findfile findfile.o test.o
 
-test.o: debugprint.h minunit.h list.h test.c
+findfile.o: debugprint.h minunit.h findfile.h findfile.c
+	$(CC) $(CFLAGS) -o findfile.o findfile.c -c
+
+test.o: debugprint.h minunit.h findfile.h test.c
 	$(CC) $(CFLAGS) -o test.o test.c -c
