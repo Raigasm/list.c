@@ -103,5 +103,5 @@ yard
 
 for item in "${list_of_test_files[@]}"
 do 
-  echo "this is ${item}" >> ${item}.txt
+  echo "this is ${item}.txt" >> ${item}.txt
 done 
