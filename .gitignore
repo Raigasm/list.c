@@ -156,4 +156,4 @@ test/temp
 .tmp
 ####################################
 
-test_files/*.txt 
+extension/test_files/*.txt 

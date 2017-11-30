@@ -6,6 +6,8 @@ You don't need to match case.
 
 An implementation of a Search Tree, written in C.
 
+Returns the full paths of any files it finds matching the input.
+
 ## Usage
 
 ```bash
@@ -15,12 +17,12 @@ make
 ./findfile <filename> <path/to/search/in/> #to find a file in a specific directory
 ```
 
-**NB:** do not include the angle brackets `<>`. For example, to find this README, you could type `./findunit readme` 
+**NB:** do not include the angle brackets `<>`. For example, to find this README, you could type `./findunit readme`
 
 ## Running Tests
 
-- Compile ./test.c 
-- Run it :D 
+- We need some files to search from, so run `test_files/create_files.sh` to create 100 tiny text files with random names.
+- `make test && ./test`
 
 ## Libraries Used
 - [Minunit (for unit testing)](https://github.com/siu/minunit) 
