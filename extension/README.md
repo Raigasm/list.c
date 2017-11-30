@@ -27,3 +27,10 @@ make
 ## Libraries Used
 - [Minunit (for unit testing)](https://github.com/siu/minunit) 
 - [tinydir (very small platform agnostic C directory and file reader)](https://github.com/cxong/tinydir)
+
+
+## References
+
+- https://stackoverflow.com/questions/298510/how-to-get-the-current-directory-in-a-c-program
+- https://en.wikipedia.org/wiki/Binary_search_tree
+- 

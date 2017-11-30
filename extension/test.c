@@ -10,13 +10,6 @@ int tests_failed  = 0;
 int suites_run    = 0;
 int suites_failed = 0;
 
-
-static char *test_check_testing_works()
-{
-    mu_assert("Testing does not work", 7 == 7);
-    return 0;
-}
-
 void test_setup (void) {
     printf("test_setup\n");
 }
@@ -25,88 +18,104 @@ void test_teardown (void) {
     printf("test_teardown\n");
 }
 
-MU_TEST(test_check)
+MU_TEST(test_isRoot)
 {
-    mu_check(5 == 7);
+    printf("running test for isRoot\n");
+}
+
+MU_TEST(test_isLeaf)
+{
+    printf("running test for isLeaf\n");
+}
+
+MU_TEST(getFilename)
+{
+    printf("running test for getFilename\n");
+}
+
+MU_TEST(getPath)
+{
+    printf("running test for getPath\n");
+}
+
+MU_TEST(test_getDirectoryContents)
+{
+    printf("running test for getDirectoryContents\n");
+}
+
+MU_TEST(test_printInstructions)
+{
+    printf("running test for printInstructions\n");
+}
+
+MU_TEST(test_parseInput)
+{
+    printf("running test for parseInput\n");
 }
 
 MU_TEST(test_currentDirectory)
 {
-    printf("test_currentDirectory\n");
-}   
+    printf("running test for currentDirectory\n");
+}
 
 MU_TEST(test_customDirectory)
 {
-    printf("test_customDirectory\n");
+    printf("running test for customDirectory\n");
 }
 
-MU_TEST(test_insert)
+MU_TEST(test_insertNode)
 {
-    printf("test_insert\n");
+    printf("running test for insertNode\n");
 }
 
-MU_TEST(test_delete) {
-    printf("test_delete\n");
-}   
-
-MU_TEST(search)
+MU_TEST(test_printTree)
 {
-    printf("search\n");
+    printf("running test for printTree\n");
 }
 
-MU_TEST(results )
+MU_TEST(test_deleteNode)
 {
-    printf("results \n");
+    printf("running test for deleteNode\n");
 }
-
-MU_TEST(instructions)
-{
-    printf("instructions\n");
-}
-
-MU_TEST(parseInput)
-{
-    printf("parseInput\n");
-}
-
-MU_TEST(printTree)
-{
-    printf("printTree\n");
-}
-
-MU_TEST(getDirectoryContents)
-{
-    printf("getDirectoryContents\n");
-}
-
-MU_TEST(destroyTree)
-{
-    printf("destroyTree\n");
-}
-
-
 
 MU_TEST(test_makeTree)
 {
-    printf("test_makeTree\n");
+    printf("running test for makeTree\n");
 }
+
+MU_TEST(test_destroyTree)
+{
+    printf("running test for destroyTree\n");
+}
+
+MU_TEST(test_searchFor)
+{
+    printf("running test for searchFor\n");
+}
+
+MU_TEST(test_printResults)
+{
+    printf("running test for printResults\n");
+}
+
 
 MU_TEST_SUITE(test_findfile)
 {
     MU_SUITE_CONFIGURE(&test_setup, &test_teardown);
-    MU_RUN_TEST(test_check);
+    MU_RUN_TEST(test_isRoot);
+    MU_RUN_TEST(test_isLeaf);
+    MU_RUN_TEST(test_getDirectoryContents);
+    MU_RUN_TEST(test_printInstructions);
+    MU_RUN_TEST(test_parseInput);
     MU_RUN_TEST(test_currentDirectory);
     MU_RUN_TEST(test_customDirectory);
-    MU_RUN_TEST(test_insert);
-    MU_RUN_TEST(test_delete);
-    MU_RUN_TEST(search);
-    MU_RUN_TEST(results);
-    MU_RUN_TEST(instructions);
-    MU_RUN_TEST(parseInput);
-    MU_RUN_TEST(printTree);
-    MU_RUN_TEST(getDirectoryContents);
-    MU_RUN_TEST(destroyTree);
+    MU_RUN_TEST(test_insertNode);
+    MU_RUN_TEST(test_printTree);
+    MU_RUN_TEST(test_deleteNode);
     MU_RUN_TEST(test_makeTree);
+    MU_RUN_TEST(test_destroyTree);
+    MU_RUN_TEST(test_searchFor);
+    MU_RUN_TEST(test_printResults);
 }
 
 
