@@ -16,7 +16,11 @@ bool isRoot(node *input){
 
 // returns true if this node is a leaf node, otherwise false
 bool isLeaf(node *input){
-  return 0;  
+  if (input->leftChild == NULL && input->rightChild == NULL) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // returns the filename of a specific file

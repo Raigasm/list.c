@@ -49,7 +49,37 @@ static char * test_isRoot()
 static char * test_isLeaf()
 {
     printf("running test for isLeaf\n");
-    mu_assert("test_isLeaf not yet implemented", false);
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
+    data->name = filename;
+    data->path = path;
+
+    node *leaf = malloc(sizeof(node));
+    node *notLeaf = malloc(sizeof(node));
+    node *anotherLeaf = malloc(sizeof(node));
+
+    leaf->data = data;
+    leaf->leftChild = NULL;
+    leaf->rightChild = NULL;
+    leaf->parent = notLeaf;
+
+ 
+    anotherLeaf->data = data;
+    anotherLeaf->leftChild = NULL;
+    anotherLeaf->rightChild = NULL;
+    anotherLeaf->parent = notLeaf;
+
+
+    notLeaf->data = data;
+    notLeaf->leftChild = leaf;
+    notLeaf->rightChild = anotherLeaf;
+    notLeaf->parent = notLeaf;
+
+    mu_assert("isLeaf should return true if node has no children (leaf)", isLeaf(leaf));
+    mu_assert("isLeaf should return true if node has no children (anotherLeaf)", isLeaf(anotherLeaf));
+    mu_assert("isLeaf should return false if node has any children", !isLeaf(notLeaf));
+
     return 0;
 }
 
