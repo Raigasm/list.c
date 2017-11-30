@@ -3,19 +3,19 @@
 #define FINDFILE_H_
 
 // represents each file
-typedef struct NodeData 
+typedef struct FileInfo
 {
   char *filename; // filename with extension
   char *path;     // full file path
-} nodeData;
+} fileInfo;
 
 // wrapper for file data so that it can be used in the binary search tree
 typedef struct Node 
 {
-  struct NodeData data; // contains the filename and path
+  struct FileInfo *data; // contains the filename and path
   struct Node *leftChild; // reference to left child, if any 
   struct Node *rightChild; // reference to right child, if any
-  struct Node *parent; 
+  struct Node *parent; // reference to the parent node, if not the root node.
 } node;
 
 // a binary search tree containing files in the search directory
@@ -25,13 +25,13 @@ typedef struct BinarySearchTree
   int size; // number of nodes in the tree
 } binarySearchTree;
 
-// a linked list of search results
-typedef struct SearchResults 
+// a linked list of files
+typedef struct FileList 
 {
-  int numberOfResults;
+  int count;
   struct Node *first;
   struct Node *last;
-} searchResults;
+} fileList;
 
 // configuration generated based off run parameters
 struct CONFIG
@@ -41,45 +41,57 @@ struct CONFIG
 };
 
 // returns true if this node is the root node, otherwise false;
-bool isRoot(Node); 
+bool isRoot(node *input); 
 
 // returns true if this node is a leaf node, otherwise false
-bool isLeaf(Node); 
+bool isLeaf(node *input); 
 
-// returns the filename of a specific node 
-char *getFilename(Node);
+// returns the filename of a specific file 
+char *getFilename(fileInfo *input);
 
-// gets the full path of a specific node
-char *getPath(Node); 
+// gets the full path of a specific file
+char *getPath(fileInfo *input); 
 
-// traverses a directory on the user's filesystem and returns a list of filenames
-void getDirectoryContents (void); //TODO: fix signature for getDirectoryContents
+// traverses a directory on the user's filesystem and stores it in a specified FileList
+fileList *getDirectoryContents (char *directory, fileList *output);
 
 // prints usage instructions to stdout
-void printInstructions (void); //TODO: fix signature for printInstructions
+void printInstructions (void); 
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG) 
-void parseInput (void); //TODO: fix signature for parseInput
+// returns 0 if input is valid and configuration successful, otherwise 1
+int parseInput (char *input); 
 
-// inserts a node in the right position in the tree
-void insertNode (void); //TODO: fix signature for insertNode
+// Wraps file data in a node object (without any references to parents etc)
+node *createNode(fileInfo *input);
 
-// prints the contents of the tree
-void printTree (void); //TODO: fix signature for printTree
+/** inserts a node in the right position in a tree
+ *  sets parent/children appropriately for the new node
+ *  updates children for the parent node, if any
+ *  updates the node count 
+ *  NB: returns 0 if unsuccessful, 
+ **/
+int insertNode (node *input, binarySearchTree *output); 
+
+// prints the contents of the tree to stdout
+// returns 0 if successful, otherwise 1
+int printTree (binarySearchTree *input); 
 
 // removes a node from the tree, retaining the correct order/structure
-void deleteNode (void); //TODO: fix signature for deleteNode
+int deleteNode (node *toDelete, binarySearchTree *tree);
 
-// turns a list of files into a binary search tree
-void makeTree (void); //TODO: fix signature for makeTree
+// transforms a FileList into a binary search tree
+binarySearchTree *makeTree (fileList *input, binarySearchTree *output); 
 
 // memory cleanup
-void destroyTree (void); //TODO: fix signature for destroyTree#
+// returns 0 if successful. Burns down your home if unsuccessful.
+int destroyTree (binarySearchTree *toDelete);
 
-// traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results as a searchResult
-void searchFor (void); //TODO: fix signature for searchFor
+// traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
+fileList *searchFor (char *input, binarySearchTree *tree, fileList *output);
 
-// prints results found
-void printResults (void); //TODO: fix signature for printResults
+// prints a file list to stdout
+// returns 0 if successful, otherwise 1
+int printFileList (fileList *input); 
 
 #endif

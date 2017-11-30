@@ -11,15 +11,16 @@ int suites_run    = 0;
 int suites_failed = 0;
 
 void test_setup (void) {
-    printf("test_setup\n");
+    // printf("test_setup\n");
 }
 
 void test_teardown (void) {
-    printf("test_teardown\n");
+    // printf("test_teardown\n");
 }
 
 MU_TEST(test_isRoot)
 {
+
     printf("running test for isRoot\n");
 }
 
@@ -28,12 +29,12 @@ MU_TEST(test_isLeaf)
     printf("running test for isLeaf\n");
 }
 
-MU_TEST(getFilename)
+MU_TEST(test_getFilename)
 {
     printf("running test for getFilename\n");
 }
 
-MU_TEST(getPath)
+MU_TEST(test_getPath)
 {
     printf("running test for getPath\n");
 }
@@ -61,6 +62,11 @@ MU_TEST(test_currentDirectory)
 MU_TEST(test_customDirectory)
 {
     printf("running test for customDirectory\n");
+}
+
+MU_TEST(test_createNode)
+{
+    printf("running test for createNode\n");
 }
 
 MU_TEST(test_insertNode)
@@ -109,6 +115,7 @@ MU_TEST_SUITE(test_findfile)
     MU_RUN_TEST(test_parseInput);
     MU_RUN_TEST(test_currentDirectory);
     MU_RUN_TEST(test_customDirectory);
+    MU_RUN_TEST(test_createNode);
     MU_RUN_TEST(test_insertNode);
     MU_RUN_TEST(test_printTree);
     MU_RUN_TEST(test_deleteNode);

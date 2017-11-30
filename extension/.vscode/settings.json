@@ -1,8 +1,19 @@
 {
-  "cSpell.words": [
-    "findfile"
-  ],
+  "cSpell.words": ["findfile"],
   "files.associations": {
-    "list.h": "c"
+    "list.h": "c",
+    "algorithm": "cpp"
+  },
+  "saveAndRun": {
+    "commands": [
+      {
+        "match": ".c",
+        "cmd": "echo 'running tests' && gcc test.c -lm -o test && ./test && git status"
+      },
+      {
+        "match": ".h",
+        "cmd": "echo 'running tests' && gcc test.c -lm -o test && ./test && git status"
+      }
+    ]
   }
 }
