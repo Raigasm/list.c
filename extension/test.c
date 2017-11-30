@@ -42,109 +42,127 @@ static char * test_isRoot()
 
     mu_assert("isRoot should return true if node has no parent", isRoot(root));
     mu_assert("isRoot should return false if node has a parent", !isRoot(notRoot));
+    
+    return 0;
 }
 
 static char * test_isLeaf()
 {
     printf("running test for isLeaf\n");
+    mu_assert("test_isLeaf not yet implemented", false);
     return 0;
 }
 
 static char * test_getFilename()
 {
     printf("running test for getFilename\n");
+    mu_assert("test_getFilename not yet implemented", false);
     return 0;
 }
 
 static char * test_getPath()
 {
     printf("running test for getPath\n");
+    mu_assert("test_getPath not yet implemented", false);
     return 0;
 }
 
 static char * test_getDirectoryContents()
 {
     printf("running test for getDirectoryContents\n");
+    mu_assert("test_getDirectoryContents not yet implemented", false);
     return 0;
 }
 
 static char * test_printInstructions()
 {
     printf("running test for printInstructions\n");
+    mu_assert("test_printInstructions not yet implemented", false);
     return 0;
 }
 
 static char * test_parseInput()
 {
     printf("running test for parseInput\n");
+    mu_assert("test_parseInput not yet implemented", false);
     return 0;
 }
 
 static char * test_currentDirectory()
 {
     printf("running test for currentDirectory\n");
+    mu_assert("test_currentDirectory not yet implemented", false);
     return 0;
 }
 
 static char * test_customDirectory()
 {
     printf("running test for customDirectory\n");
+    mu_assert("test_customDirectory not yet implemented", false);
     return 0;
 }
 
 static char * test_createNode()
 {
     printf("running test for createNode\n");
+    mu_assert("test_createNode not yet implemented", false);
     return 0;
 }
 
 static char * test_insertNode()
 {
     printf("running test for insertNode\n");
+    mu_assert("test_insertNode not yet implemented", false);
     return 0;
 }
 
 static char * test_printTree()
 {
     printf("running test for printTree\n");
+    mu_assert("test_printTree not yet implemented", false);
     return 0;
 }
 
 static char * test_deleteNode()
 {
     printf("running test for deleteNode\n");
+    mu_assert("test_deleteNode not yet implemented", false);
     return 0;
 }
 
 static char * test_makeTree()
 {
     printf("running test for makeTree\n");
+    mu_assert("test_makeTree not yet implemented", false);
     return 0;
 }
 
 static char * test_destroyTree()
 {
     printf("running test for destroyTree\n");
+    mu_assert("test_destroyTree not yet implemented", false);
     return 0;
 }
 
 static char * test_searchFor()
 {
     printf("running test for searchFor\n");
+    mu_assert("test_searchFor not yet implemented", false);
     return 0;
 }
 
 static char * test_printResults()
 {
     printf("running test for printResults\n");
+    mu_assert("test_printResults not yet implemented", false);
     return 0;
 }
 
 static char * all_tests () {
-    mu_run_test(test_getPath);
-    mu_run_test(test_getFilename);
     mu_run_test(test_isRoot);
     mu_run_test(test_isLeaf);
+    mu_run_test(test_getPath);
+    mu_run_test(test_getFilename);
     mu_run_test(test_getDirectoryContents);
     mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);

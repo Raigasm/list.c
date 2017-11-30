@@ -7,7 +7,11 @@
 
 // returns true if this node is the root node, otherwise false;
 bool isRoot(node *input){
-  return false;
+  if (input->parent != NULL) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 // returns true if this node is a leaf node, otherwise false
