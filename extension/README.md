@@ -1,6 +1,6 @@
 # findfile.c
 
-Searches for a file in a directory. 
+Searches for a file in a directory.
 
 An implementation of a Search Tree, written in C.
 

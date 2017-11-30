@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
     "findfile"
-  ]
+  ],
+  "files.associations": {
+    "list.h": "c"
+  }
 }

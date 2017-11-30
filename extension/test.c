@@ -1,6 +1,6 @@
 #include "debugprint.h"
 #include "minunit.h"
-#include "list.h"
+#include "findfile.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
