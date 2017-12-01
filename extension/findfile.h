@@ -40,17 +40,20 @@ struct CONFIG
     char *searchIn; // path to search in 
 };
 
+// copies a string from input to output (I forgot strcpy existed)
+void copyString(char *input, char *output);
+
 // returns true if this node is the root node, otherwise false;
-bool isRoot(node *input); 
+bool isRoot(node *input);
 
 // returns true if this node is a leaf node, otherwise false
 bool isLeaf(node *input); 
 
 // returns the filename of a specific file 
-char *getFilename(fileInfo *input);
+char *getFilename(fileInfo *input, char *output);
 
 // gets the full path of a specific file
-char *getPath(fileInfo *input); 
+char *getPath(fileInfo *input, char *output); 
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents (char *directory, fileList *output);
@@ -63,7 +66,7 @@ void printInstructions (void);
 int parseInput (char *input); 
 
 // Wraps file data in a node object (without any references to parents etc)
-node *createNode(fileInfo *input);
+node *createNode(fileInfo *input, node *output);
 
 /** inserts a node in the right position in a tree
  *  sets parent/children appropriately for the new node

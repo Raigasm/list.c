@@ -11,12 +11,29 @@ int suites_run    = 0;
 int suites_failed = 0;
 
 
-void test_setup (void) {
-    // printf("test_setup\n");
+bool sameString (char *first, char *second){
+    return strcmp(first, second) == 0;
 }
 
-void test_teardown (void) {
-    // printf("test_teardown\n");
+static char * test_copyString()
+{
+    char *foo = "foo";
+    char *bar = "bar";
+    char *foobar = "foobar";
+    char *llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch = "llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch";
+    char *supercalifragilisticexpialidocious = "supercalifragilisticexpialidocious";
+
+    char output[256]; 
+    copyString(foo, output);
+    mu_assert("short string (foo) can be copied", sameString(output, "foo"));
+    copyString(bar, output);
+    mu_assert("short string (bar) can be copied", sameString(output, "bar"));
+    copyString(foobar, output);
+    mu_assert("longer string should be able to overwrite shorter string", sameString(output, "foobar"));
+    copyString(llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch, output);
+    mu_assert("ridiculously long strings can be copied", sameString(output, "llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"));
+    copyString(supercalifragilisticexpialidocious, output);
+    mu_assert("supercalifragilisticexpialidocious can be copied", sameString(output, "supercalifragilisticexpialidocious"));
 }
 
 static char * test_isRoot()
@@ -86,14 +103,35 @@ static char * test_isLeaf()
 static char * test_getFilename()
 {
     printf("running test for getFilename\n");
-    mu_assert("test_getFilename not yet implemented", false);
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
+    data->name = filename;
+    data->path = path;
+    char output[7];
+    getFilename(data, output);
+    int result = strcmp(output, "foo.bar");
+    
+    mu_assert("getFilename should return filename", result == 0);
     return 0;
 }
 
 static char * test_getPath()
 {
     printf("running test for getPath\n");
-    mu_assert("test_getPath not yet implemented", false);
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
+    data->name = filename;
+    data->path = path;
+    DEBUG_PRINT("data.name = %s\n", data->name);
+    DEBUG_PRINT("data.path = %s\n", data->path);
+    char output[22];
+    getPath(data, output);
+    printf("output is %s\n", output);
+    int result = strcmp(output, "/full/path/to/foo.bar");
+
+    mu_assert("getPath should return path", result == 0);
     return 0;
 }
 
@@ -189,6 +227,7 @@ static char * test_printResults()
 }
 
 static char * all_tests () {
+    mu_run_test(test_copyString);
     mu_run_test(test_isRoot);
     mu_run_test(test_isLeaf);
     mu_run_test(test_getPath);
