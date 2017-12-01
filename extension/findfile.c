@@ -40,17 +40,20 @@ bool isLeaf(node *input)
 char *getFilename(fileInfo *input, char *output)
 {
   copyString(input->name, output);
+  return output;
 }
 
 // gets the full path of a specific file
 char *getPath(fileInfo *input, char *output){
   copyString(input->path, output);
+  return output;
 }
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents(char *path, fileList *output)
 {
   
+  return output;
 }
 
 // prints usage instructions to stdout
@@ -118,6 +121,6 @@ fileList *searchFor(char *input, binarySearchTree *tree, fileList *output)
 // prints a file list to stdout
 // returns 0 if successful, otherwise 1
 int printFileList(fileList *input){
-  return 0;  
+  return 0;
 }
 
