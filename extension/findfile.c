@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "minunit.h"
+#include "tinydir.h"
 
 void copyString(char *input, char *output)
 {
@@ -51,8 +52,27 @@ char *getPath(fileInfo *input, char *output){
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents(char *path, fileList *output)
 {
-  return 0;
+  tinydir_dir dir;
+  tinydir_open(&dir, "/path/to/dir");
+
+  while (dir.has_next)
+  {
+    tinydir_file file;
+    tinydir_readfile(&dir, &file);
+
+    printf("%s", file.name);
+    if (file.is_dir)
+    {
+      printf("/");
+    }
+    printf("\n");
+
+    tinydir_next(&dir);
+  }
+
+  tinydir_close(&dir);
 }
+
 
 // prints usage instructions to stdout
 void printInstructions(void)

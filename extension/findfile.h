@@ -25,6 +25,14 @@ typedef struct BinarySearchTree
   int size; // number of nodes in the tree
 } binarySearchTree;
 
+// item in list of files 
+typedef struct FileListItem 
+{
+  struct FileInfo *data;
+  struct FileListItem *next;
+  struct FileListItem *prev;
+} fileListItem;
+
 // a linked list of files
 typedef struct FileList 
 {
@@ -53,7 +61,17 @@ bool isLeaf(node *input);
 char *getFilename(fileInfo *input, char *output);
 
 // gets the full path of a specific file
-char *getPath(fileInfo *input, char *output); 
+char *getPath(fileInfo *input, char *output);
+
+// wraps file data in a file list item
+fileListItem *createFileListItem (char *name, char *path);
+
+// adds an item to a file list and attaching it to the last file in the list
+fileList *addFile (fileListItem *input, fileList *output);
+
+// prints a file list to stdout
+// returns 0 if successful, otherwise 1
+int printFileList(fileList *input);
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents (char *directory, fileList *output);
@@ -92,9 +110,5 @@ int destroyTree (binarySearchTree *toDelete);
 
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
 fileList *searchFor (char *input, binarySearchTree *tree, fileList *output);
-
-// prints a file list to stdout
-// returns 0 if successful, otherwise 1
-int printFileList (fileList *input); 
 
 #endif
