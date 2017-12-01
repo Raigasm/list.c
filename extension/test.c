@@ -34,6 +34,7 @@ static char * test_copyString()
     mu_assert("ridiculously long strings can be copied", sameString(output, "llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"));
     copyString(supercalifragilisticexpialidocious, output);
     mu_assert("supercalifragilisticexpialidocious can be copied", sameString(output, "supercalifragilisticexpialidocious"));
+    return 0;
 }
 
 static char * test_isRoot()
@@ -138,7 +139,7 @@ static char * test_getPath()
 static char * test_getDirectoryContents()
 {
     printf("running test for getDirectoryContents\n");
-    mu_assert("test_getDirectoryContents not yet implemented", false);
+    mu_assert("test_getDirectoryContents not yet implemented", false); 
     return 0;
 }
 
