@@ -13,7 +13,7 @@ Returns the full paths of any files it finds matching the input.
 ```bash
 cd extension
 make
-./findfile <filename> # to find a file in current directory 
+./findfile <filename> # to find a file in current directory
 ./findfile <filename> <path/to/search/in/> #to find a file in a specific directory
 ```
 

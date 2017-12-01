@@ -10,7 +10,6 @@ void copyString(char *input, char *output)
   while (*input != '\0')
   {
     *output = *input;
-    input++;
     output++;
   }
   // terminate string with null character
@@ -51,7 +50,7 @@ char *getPath(fileInfo *input, char *output){
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents(char *path, fileList *output)
 {
-  return 0;
+  
 }
 
 // prints usage instructions to stdout
