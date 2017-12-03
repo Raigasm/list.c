@@ -101,6 +101,19 @@ static char * test_isLeaf()
     return 0;
 }
 
+static char *test_configure()
+{
+    char *testPath = "test_files";
+    char *testQuery = "test";
+    configure(testQuery, testPath);
+    mu_assert("COUNT should be set properly", MODEL.COUNT == 0);
+    mu_assert("DIRECTORY should be set properly", strcmp(testPath, MODEL.DIRECTORY) == 0);
+    mu_assert("ALGORITHM should be set properly", MODEL.ALGORITHM == 0);
+    mu_assert("LIST should be set properly", MODEL.LIST != NULL);
+    mu_assert("TREE  should be set properly", MODEL.TREE != NULL);
+        return 0;
+}
+
 static char * test_getFilename()
 {
     printf("running test for getFilename\n");
@@ -150,16 +163,16 @@ static char * test_createFileListItem() {
 
     mu_assert("file list item should be created successfully", first != NULL);
     mu_assert("first file list item should have id of 0", first->id == 0);
-    mu_assert("first file list item should have correct name", first->data->name == 0);
-    mu_assert("first file list item should have correct path", first->data->path == 0);
+    mu_assert("first file list item should have correct name", first->data->name = "foo.bar");
+    mu_assert("first file list item should have correct path", first->data->path == "/full/path/to/foo.bar");
     mu_assert("second file list item should be created successfully", second != NULL);
     mu_assert("second file list item should have id of 1", second->id == 1);
-    mu_assert("second file list item should have correct name", second->data->name == 1);
-    mu_assert("second file list item should have correct path", second->data->path == 1);
+    mu_assert("second file list item should have correct name", second->data->name = "rai.exe");
+    mu_assert("second file list item should have correct path", second->data->path == "/some/other/path/to/rai.exe");
     mu_assert("third file list item should be created successfully", third  != NULL);
     mu_assert("third file list item should have id of 2", third->id == 2);
-    mu_assert("third file list item should have correct name", third->data->name  == 2);
-    mu_assert("third file list item should have correct path", third->data->path  == 2);
+    mu_assert("third file list item should have correct name", third->data->name = "feelings");
+    mu_assert("third file list item should have correct path", third->data->path == "/trash/feelings");
 
     return 0;
 }
@@ -267,6 +280,7 @@ static char * all_tests () {
     mu_run_test(test_copyString);
     mu_run_test(test_isRoot);
     mu_run_test(test_isLeaf);
+    mu_run_test(test_configure);
     mu_run_test(test_getPath);
     mu_run_test(test_getFilename);
     mu_run_test(test_createFileListItem);

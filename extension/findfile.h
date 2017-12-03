@@ -42,13 +42,15 @@ typedef struct FileList
 } fileList;
 
 // configuration / model state object generated based off run parameters
-struct MODEL
+struct Model
 {
-    int searchAlgorithm; // 0 = Binary Search, 1 = ?
-    char *searchIn; // path to search in, default is cwd 
-    struct FileList *list; 
-    struct BinarySearchTree *tree;// generated 
-};
+    int ALGORITHM; // 0 = Binary Search, 1 = ?
+    char *DIRECTORY; // path to search in, default is cwd 
+    struct FileList *LIST; 
+    struct BinarySearchTree *TREE;// generated 
+    int COUNT;
+    char *QUERY; // file to search for
+} MODEL;
 
 // copies a string from input to output (I forgot strcpy existed)
 void copyString(char *input, char *output);
@@ -64,6 +66,9 @@ char *getFilename(fileInfo *input, char *output);
 
 // gets the full path of a specific file
 char *getPath(fileInfo *input, char *output);
+
+// initializes model 
+int configure (char *query, char *directory);
 
 // wraps file data in a file list item
 fileListItem *createFileListItem (char *name, char *path);

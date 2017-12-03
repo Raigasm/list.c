@@ -162,3 +162,4 @@ extension/*.o
 extension/findfile
 extension/findfile.o
 *.o
+extension/findfile (1)

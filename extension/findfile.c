@@ -87,9 +87,28 @@ int parseInput(char *input)
   return 0; 
 }
 
-// 
-fileListItem *createFileListItem(char *name, char *path) {
+// initializes model
+int configure(char *query, char *directory) {
+  MODEL.COUNT = 0;
+  MODEL.DIRECTORY = directory;
+  MODEL.ALGORITHM = 0;
+  MODEL.LIST = malloc(sizeof(fileList));
+  MODEL.TREE = malloc(sizeof(binarySearchTree));
+  
+  DEBUG_PRINT("initialized model for %s", directory);
+
   return 0;
+}
+
+    fileListItem *createFileListItem(char *name, char *path)
+{
+  fileListItem *result = malloc(sizeof(fileListItem));
+  fileInfo *data = malloc(sizeof(fileInfo));
+  data->name = name;
+  data->path = path;
+  result->id = 0;
+  result->data = data;
+  return result;
 }
 
 fileList *addFileListItem(fileListItem *input, fileList *output){

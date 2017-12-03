@@ -6,7 +6,8 @@
     "iterator": "c",
     "string": "c",
     "string_view": "c",
-    "__locale": "c"
+    "__locale": "c",
+    "typeinfo": "c"
   },
   "saveAndRun": {
     "commands": [
