@@ -15,15 +15,17 @@ bool sameString (char *first, char *second){
     return strcmp(first, second) == 0;
 }
 
-void beforeEach (void) {
+model *beforeEach (char *testName) {
+    DEBUG_PRINT("\n");
     char *testPath = "test_files";
     char *testQuery = "test";
-    configure(testQuery, testPath);
-    DEBUG_PRINT("configuring model\n");
+    DEBUG_PRINT("Test %s: configuring model\n", testName);
+    return configure(testQuery, testPath);
 }
 
 static char * test_copyString()
 {
+    model *MODEL = beforeEach("copyString");
     char *foo = "foo";
     char *bar = "bar";
     char *foobar = "foobar";
@@ -46,6 +48,7 @@ static char * test_copyString()
 
 static char * test_isRoot()
 {   
+    model *MODEL = beforeEach("isRoot");
     printf("running test for isRoot\n");
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -73,6 +76,7 @@ static char * test_isRoot()
 
 static char * test_isLeaf()
 {
+    model *MODEL = beforeEach("isLeaf");
     printf("running test for isLeaf\n");
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -112,13 +116,13 @@ static char * test_isLeaf()
 
 static char *test_configure()
 {
-    beforeEach();
-    mu_assert("COUNT should be set properly", MODEL.COUNT == 0);
-    mu_assert("DIRECTORY should be set properly", strcmp("test_files", MODEL.DIRECTORY) == 0);
-    mu_assert("ALGORITHM should be set properly", MODEL.ALGORITHM == 0);
-    mu_assert("LIST should be set properly", MODEL.LIST != NULL);
-    mu_assert("TREE  should be set properly", MODEL.TREE != NULL);
-    mu_assert("COUNT  should be set properly", MODEL.COUNT == 0);
+    model *MODEL = beforeEach("Configure");
+    mu_assert("COUNT should be set properly", MODEL->COUNT == 0);
+    mu_assert("DIRECTORY should be set properly", strcmp("test_files", MODEL->DIRECTORY) == 0);
+    mu_assert("ALGORITHM should be set properly", MODEL->ALGORITHM == 0);
+    mu_assert("LIST should be set properly", MODEL->LIST != NULL);
+    mu_assert("TREE  should be set properly", MODEL->TREE != NULL);
+    mu_assert("COUNT  should be set properly", MODEL->COUNT == 0);
     
     return 0;
 }
@@ -159,7 +163,7 @@ static char * test_getPath()
 }
 
 static char * test_createFileListItem() {
-    beforeEach();
+    model *MODEL = beforeEach("createFileListItem");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -189,9 +193,7 @@ static char * test_createFileListItem() {
 }
 
 static char * test_addFileListItem() {
-    beforeEach();
-
-    // printf("testing addFileListItem \n");
+    model *MODEL = beforeEach("addFileListItem");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -208,20 +210,19 @@ static char * test_addFileListItem() {
     addFileListItem(second);
     addFileListItem(third);
 
-    mu_assert("first item should be added", MODEL.LIST->first != NULL);
-    mu_assert("first item should be added with correct id", MODEL.LIST->first != NULL);
-    mu_assert("second item should be accessible from first item", MODEL.LIST->first->next->id == 1 && strcmp(MODEL.LIST->first->next->data->name, "rai.exe") == 0);
-    mu_assert("third item should be accessible from second item", MODEL.LIST->first->next->next->id == 2);
-    mu_assert("third item should have correct data", strcmp(MODEL.LIST->first->next->next->data->name, "feelings") == 0);
-    mu_assert("count should be correct", MODEL.LIST->count == 3);
-    mu_assert("MODEL.LIST.last should point to last item", MODEL.LIST->last->id == 2);
+    mu_assert("first item should be added", MODEL->LIST->first != NULL);
+    mu_assert("first item should be added with correct id", MODEL->LIST->first != NULL);
+    mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->data->name, "rai.exe") == 0);
+    mu_assert("third item should be accessible from second item", MODEL->LIST->first->next->next->id == 2);
+    mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->data->name, "feelings") == 0);
+    mu_assert("count should be correct", MODEL->LIST->count == 3);
+    mu_assert("MODEL->LIST.last should point to last item", MODEL->LIST->last->id == 2);
+    mu_assert("MODEL->LIST.first should point to first item", MODEL->LIST->first->id == 0);
 }
 
 static char * test_printFileList() {
-
-    beforeEach();
-
-    // printf("testing addFileListItem \n");
+    
+    model *MODEL = beforeEach("Print File List");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -238,13 +239,16 @@ static char * test_printFileList() {
     addFileListItem(second);
     addFileListItem(third);
 
-    mu_assert("printFileList should return 0", printFileList(MODEL.LIST) == 0);
+    mu_assert("printFileList should return 0", printFileList(MODEL->LIST) == 0);
     return 0;
 }
 
 static char * test_getDirectoryContents()
 {
-    printf("running test for getDirectoryContents\n");
+    model *MODEL = beforeEach("getDirectoryContents");
+    
+    getDirectoryContents("./test_files/");
+    
     mu_assert("test_getDirectoryContents not yet implemented", false); 
     return 0;
 }

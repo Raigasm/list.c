@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "minunit.h"
+#include "tinydir.h"
+
+model *MODEL;
 
 void copyString(char *input, char *output)
 {
@@ -41,18 +44,55 @@ bool isLeaf(node *input)
 char *getFilename(fileInfo *input, char *output)
 {
   copyString(input->name, output);
+  return output;
 }
 
 // gets the full path of a specific file
 char *getPath(fileInfo *input, char *output){
   copyString(input->path, output);
+  return output;
 }
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents(char *path)
 {
   DEBUG_PRINT("not yet implemented\n");
-  return 0;
+
+  // from https://github.com/cxong/tinydir
+  tinydir_dir dir;
+  int i;
+  tinydir_open_sorted(&dir, path);
+
+  if (dir.n_files == 0)
+  {
+    printf("NO FILES IN DIRECTORY SPECIFIED!\n");
+  }
+
+  for (i = 0; i < dir.n_files; i++)
+  {
+    tinydir_file file;
+    tinydir_readfile_n(&dir, &file, i);
+
+    if (file.is_dir)
+    {
+      printf("/");
+    }
+
+    if (!file.is_dir)
+    {
+      printf("found file %s (%s)\n", file.name, file.path);
+      fileListItem *item = createFileListItem(file.name, file.path);
+      addFileListItem(item);
+    }
+  }
+
+  tinydir_close(&dir);
+
+
+
+  printFileList(MODEL->LIST);
+  
+  return MODEL->LIST;
 }
 
 
@@ -70,70 +110,59 @@ int parseInput(char *input)
 }
 
 // initializes model
-int configure(char *query, char *directory) {
-  MODEL.COUNT = 0;
-  MODEL.DIRECTORY = directory;
-  MODEL.ALGORITHM = 0;
-  MODEL.LIST = (fileList *) malloc(sizeof(fileList));
-  MODEL.TREE = (binarySearchTree *) malloc(sizeof(binarySearchTree));
+model *configure(char *query, char *directory) {
+  MODEL = (model *) malloc(sizeof(model));
+  MODEL->COUNT = 0;
+  MODEL->DIRECTORY = directory;
+  MODEL->ALGORITHM = 0;
+  MODEL->LIST = (fileList *) malloc(sizeof(fileList));
+  MODEL->LIST->count = 0;
+  MODEL->TREE = (binarySearchTree *) malloc(sizeof(binarySearchTree));
+  MODEL->TREE->size = 0;
   
-  DEBUG_PRINT("initialized model for %s\n", directory);
+  // DEBUG_PRINT("initialized model for %s\n", directory);
 
-  return 0;
+  return MODEL;
 }
 
 fileListItem *createFileListItem(char *name, char *path)
 {
-  fileListItem *result = malloc(sizeof(fileListItem));
-  fileInfo *data = malloc(sizeof(fileInfo));
+  fileListItem *result = (fileListItem *) malloc(sizeof(fileListItem));
+  fileInfo *data = (fileInfo *) malloc(sizeof(fileInfo));
   data->name = name;
   data->path = path;
-  result->id = MODEL.COUNT++;
+  result->id = MODEL->COUNT++;
   result->data = data;
+  result->next = 0;
+  printf("created %s (%s)\n", data->name, data->path);
   return result;
 }
 
 fileListItem *getLastFile(){
-  fileListItem *result;
-  if (MODEL.LIST->first != NULL)
-  {
-    result = MODEL.LIST->first;
-    if (result->next == NULL){
-      return result; 
-    } else {
-      while (result->next != NULL)
-      {
-        result = result->next;
-      }
-    }
-  }
-
-  return result;
+  DEBUG_PRINT("finding last file\n");
+  return MODEL->LIST->last;
 }
 
 fileList *addFileListItem(fileListItem *input){
-  bool successful;
-  if (MODEL.LIST->first == NULL && input != NULL){
-    // DEBUG_PRINT("+first\n");
-    MODEL.LIST->first = input;
-    MODEL.LIST->last = input;
-    successful = true;
-  } else if (MODEL.LIST->first != NULL) {
-    // TODO: fix segfault
-    fileListItem *last = getLastFile();
-    last->next = input;
-    MODEL.LIST->last = input;
-    successful = true;
-    // DEBUG_PRINT("+1 ");
+  
+  DEBUG_PRINT("adding %s\n", input->data->name);
+  
+  if (MODEL->LIST->count == 0){
+    DEBUG_PRINT("setting first file\n");
+    MODEL->LIST->first = input;
+    MODEL->LIST->last = input;
   } else {
-    successful = false;
+    DEBUG_PRINT("adding to existing list.\n");
+    fileListItem *last = getLastFile();
+    DEBUG_PRINT("the last file was %s (id: %i)\n", last->data->name, last->id);
+    last->next = input;
+    MODEL->LIST->last = input;
   }
 
-  if (successful){
-    MODEL.LIST->count++;
-  }
+  
+  MODEL->LIST->count++;
 
-  return MODEL.LIST;
+  return MODEL->LIST;
 }
 
 // Wraps file data in a node object (without any references to parents etc)
@@ -189,16 +218,15 @@ fileList *searchFor(char *input)
 // returns 0 if successful, otherwise 1
 int printFileList(fileList *input){
   int filesPrinted = 0;
+
+  printf("-----------------\nFiles (%i in total):\n-----------------\n", input->count);
+  fileListItem *currentFile = MODEL->LIST->first;
   
-  printf("\nFiles (%i in total):\n", input->count);
-  fileListItem *current = input->first;
-  printf("%s\n", current->data->path);
-  filesPrinted++;
-  
-  while(current->next != NULL){
-    printf("%s\n", current->next->data->path);
+  for (size_t i = 1; i <= MODEL->COUNT; i++)
+  {
+    printf("%i - %s\n", currentFile->id + 1, currentFile->data->name);
     filesPrinted++;
-    current = current->next;
+    currentFile = currentFile->next;
   }
 
   if (filesPrinted > 0){

@@ -15,11 +15,11 @@
     "commands": [
       {
         "match": ".c",
-        "cmd": "make test && ./findfile"
+        "cmd": "rm -rf *.o && make test && ./findfile"
       },
       {
         "match": ".h",
-        "cmd": "make test && ./findfile"
+        "cmd": "rm -rf *.o && make test && ./findfile"
       }
     ]
   }

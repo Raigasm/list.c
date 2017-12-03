@@ -42,7 +42,7 @@ typedef struct FileList
 } fileList;
 
 // configuration / model state object generated based off run parameters
-struct Model
+typedef struct Model
 {
     int ALGORITHM; // 0 = Binary Search, 1 = ?
     char *DIRECTORY; // path to search in, default is cwd 
@@ -50,7 +50,7 @@ struct Model
     struct BinarySearchTree *TREE;// generated 
     int COUNT;
     char *QUERY; // file to search for
-} MODEL;
+} model;
 
 // copies a string from input to output (I forgot strcpy existed)
 void copyString(char *input, char *output);
@@ -68,7 +68,7 @@ char *getFilename(fileInfo *input, char *output);
 char *getPath(fileInfo *input, char *output);
 
 // initializes model 
-int configure (char *query, char *directory);
+model *configure (char *query, char *directory);
 
 // wraps file data in a file list item
 fileListItem *createFileListItem (char *name, char *path);

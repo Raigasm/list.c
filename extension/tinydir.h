@@ -89,6 +89,9 @@ extern "C" {
 # define _TINYDIR_PATH_MAX MAX_PATH
 #elif defined  __linux__
 # include <limits.h>
+# ifndef PATH_MAX
+# define PATH_MAX 255
+# endif
 # define _TINYDIR_PATH_MAX PATH_MAX
 #elif defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
 # include <sys/param.h>
