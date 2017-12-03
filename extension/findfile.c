@@ -50,7 +50,7 @@ char *getPath(fileInfo *input, char *output){
 }
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *getDirectoryContents(char *path, fileList *output)
+fileList *getDirectoryContents(char *path)
 {
   tinydir_dir dir;
   tinydir_open(&dir, "/path/to/dir");
@@ -111,12 +111,49 @@ fileListItem *createFileListItem(char *name, char *path)
   return result;
 }
 
-fileList *addFileListItem(fileListItem *input, fileList *output){
-  return 0;
+fileListItem *getLastFile(){
+  fileListItem *result;
+  if (MODEL.LIST->first != NULL)
+  {
+    result = MODEL.LIST->first;
+    if (result->next == NULL){
+      return result; 
+    } else {
+      while (result->next != NULL)
+      {
+        result = result->next;
+      }
+    }
+  }
+
+  return result;
 }
 
-    // Wraps file data in a node object (without any references to parents etc)
-    node *createNode(fileInfo *input, node *output)
+fileList *addFileListItem(fileListItem *input){
+  bool successful;
+  if (MODEL.LIST->first == NULL && input != NULL){
+    DEBUG_PRINT("+first\n");
+    MODEL.LIST->first = input;
+    successful = true;
+  } else if (input != NULL && MODEL.LIST->first != NULL) {
+    // TODO: fix segfault
+    fileListItem *last = getLastFile();
+    last->next = input;
+    successful = true;
+    DEBUG_PRINT("+1 ");
+  } else {
+    successful = false;
+  }
+
+  if (successful){
+    MODEL.LIST->count++;
+  }
+
+  return MODEL.LIST;
+}
+
+// Wraps file data in a node object (without any references to parents etc)
+node *createNode(fileInfo *input, node *output)
 {
   return 0;  
 }
@@ -127,39 +164,39 @@ fileList *addFileListItem(fileListItem *input, fileList *output){
  *  updates the node count 
  *  NB: returns 0 if unsuccessful, 
  **/
-int insertNode(node *input, binarySearchTree *output)
+int insertNode(node *input)
 {
   return 0;
 }
 
 // prints the contents of the tree to stdout
 // returns 0 if successful, otherwise 1
-int printTree(binarySearchTree *input)
+int printTree()
 {
   return 0;
 }
 
 // removes a node from the tree, retaining the correct order/structure
-int deleteNode(node *toDelete, binarySearchTree *tree)
+int deleteNode(node *toDelete)
 {
   return 0;
 }
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree(fileList *input, binarySearchTree *output)
+binarySearchTree *makeTree(fileList *input)
 {
   return 0;
 }
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.
-int destroyTree(binarySearchTree *toDelete)
+int destroyTree()
 {
   return 0;
 }
 
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
-fileList *searchFor(char *input, binarySearchTree *tree, fileList *output)
+fileList *searchFor(char *input)
 {
   return 0;
 }

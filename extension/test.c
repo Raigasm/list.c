@@ -158,6 +158,8 @@ static char * test_getPath()
 }
 
 static char * test_createFileListItem() {
+    beforeEach();
+
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
     char *filenameTwo = "rai.exe";
@@ -186,7 +188,34 @@ static char * test_createFileListItem() {
 }
 
 static char * test_addFileListItem() {
-    mu_assert("test_addFileListItem not yet implemented", false);
+    beforeEach();
+
+    printf("testing addFileListItem \n");
+
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    char *filenameTwo = "rai.exe";
+    char *pathTwo = "/some/other/path/to/rai.exe";
+    char *filenameThree = "feelings";
+    char *pathThree = "/trash/feelings";
+
+    fileListItem *first = createFileListItem(filename, path);
+    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
+    fileListItem *third = createFileListItem(filenameThree, pathThree);
+
+    addFileListItem(first);
+    addFileListItem(second);
+    addFileListItem(third);
+
+    mu_assert("first item should be added", MODEL.LIST->first != NULL);
+    mu_assert("first item should be added with correct id", MODEL.LIST->first != NULL);
+    mu_assert("second item should be accessible from first item", MODEL.LIST->first->next->id == 1 && strcmp(MODEL.LIST->first->next->data->name, "rai.exe") == 0);
+    mu_assert("third item should be accessible from second item", MODEL.LIST->first->next->next->id == 2);
+    mu_assert("third item should have correct data", strcmp(MODEL.LIST->first->next->next->data->name, "feelings") == 0);
+    mu_assert("count should be correct", MODEL.LIST->count == 3);
+    mu_assert("MODEL.LIST.last should point to last item", MODEL.LIST->last->id == 3);
+
+
 }
 
 static char * test_printFileList() {

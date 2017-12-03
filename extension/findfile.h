@@ -37,8 +37,8 @@ typedef struct FileListItem
 typedef struct FileList 
 {
   int count; // same as (last.id + 1) 
-  struct Node *first; // should be a reference to item with id 0
-  struct Node *last; // should be a reference to item with id (count - 1)
+  struct FileListItem *first; // should be a reference to item with id 0
+  struct FileListItem *last; // should be a reference to item with id (count - 1)
 } fileList;
 
 // configuration / model state object generated based off run parameters
@@ -74,14 +74,14 @@ int configure (char *query, char *directory);
 fileListItem *createFileListItem (char *name, char *path);
 
 // adds an item to a file list and attaching it to the last file in the list
-fileList *addFileListItem (fileListItem *input, fileList *output);
+fileList *addFileListItem (fileListItem *input);
 
 // prints a file list to stdout
 // returns 0 if successful, otherwise 1
 int printFileList(fileList *input);
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *getDirectoryContents (char *directory, fileList *output);
+fileList *getDirectoryContents (char *directory);
 
 // prints usage instructions to stdout
 void printInstructions (void);
@@ -100,23 +100,23 @@ node *createNode(fileInfo *input, node *output);
  *  updates the node count 
  *  NB: returns 0 if unsuccessful, 
  **/
-int insertNode (node *input, binarySearchTree *output); 
+int insertNode (node *input); 
 
 // prints the contents of the tree to stdout
 // returns 0 if successful, otherwise 1
-int printTree (binarySearchTree *input); 
+int printTree (); 
 
 // removes a node from the tree, retaining the correct order/structure
-int deleteNode (node *toDelete, binarySearchTree *tree);
+int deleteNode (node *toDelete);
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree (fileList *input, binarySearchTree *output); 
+binarySearchTree *makeTree (); 
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.
-int destroyTree (binarySearchTree *toDelete);
+int destroyTree ();
 
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
-fileList *searchFor (char *input, binarySearchTree *tree, fileList *output);
+fileList *searchFor (char *input);
 
 #endif
