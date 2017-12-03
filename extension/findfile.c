@@ -77,7 +77,7 @@ fileList *getDirectoryContents(char *path, fileList *output)
 // prints usage instructions to stdout
 void printInstructions(void)
 {
-
+  printf("Findfile: no query specified!\nPlease specify a filename to find, and a directory to look within (optional)\n\nExample: findfile 'Mozart' ~/Downloads/Music\n");
 }
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG)
@@ -87,8 +87,13 @@ int parseInput(char *input)
   return 0; 
 }
 
-// Wraps file data in a node object (without any references to parents etc)
-node *createNode(fileInfo *input, node *output)
+// 
+fileListItem *createFileListItem(char *name, char *path) {
+  return 0;
+}
+
+    // Wraps file data in a node object (without any references to parents etc)
+    node *createNode(fileInfo *input, node *output)
 {
   return 0;  
 }

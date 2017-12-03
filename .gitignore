@@ -159,3 +159,5 @@ test/temp
 extension/test_files/*.txt 
 extension/findfile
 extension/*.o
+extension/findfile
+extension/findfile.o

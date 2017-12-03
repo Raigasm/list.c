@@ -28,24 +28,26 @@ typedef struct BinarySearchTree
 // item in list of files 
 typedef struct FileListItem 
 {
-  struct FileInfo *data;
-  struct FileListItem *next;
-  struct FileListItem *prev;
+  int id; // starts at 0
+  struct FileInfo *data; 
+  struct FileListItem *next; // reference to next item
 } fileListItem;
 
-// a linked list of files
+// a single-linked list of files
 typedef struct FileList 
 {
-  int count;
-  struct Node *first;
-  struct Node *last;
+  int count; // same as (last.id + 1) 
+  struct Node *first; // should be a reference to item with id 0
+  struct Node *last; // should be a reference to item with id (count - 1)
 } fileList;
 
-// configuration generated based off run parameters
-struct CONFIG
+// configuration / model state object generated based off run parameters
+struct MODEL
 {
     int searchAlgorithm; // 0 = Binary Search, 1 = ?
-    char *searchIn; // path to search in 
+    char *searchIn; // path to search in, default is cwd 
+    struct FileList *list; 
+    struct BinarySearchTree *tree;// generated 
 };
 
 // copies a string from input to output (I forgot strcpy existed)
@@ -67,7 +69,7 @@ char *getPath(fileInfo *input, char *output);
 fileListItem *createFileListItem (char *name, char *path);
 
 // adds an item to a file list and attaching it to the last file in the list
-fileList *addFile (fileListItem *input, fileList *output);
+fileList *addFileListItem (fileListItem *input, fileList *output);
 
 // prints a file list to stdout
 // returns 0 if successful, otherwise 1
@@ -77,7 +79,7 @@ int printFileList(fileList *input);
 fileList *getDirectoryContents (char *directory, fileList *output);
 
 // prints usage instructions to stdout
-void printInstructions (void); 
+void printInstructions (void);
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG) 
 // returns 0 if input is valid and configuration successful, otherwise 1
@@ -86,7 +88,8 @@ int parseInput (char *input);
 // Wraps file data in a node object (without any references to parents etc)
 node *createNode(fileInfo *input, node *output);
 
-/** inserts a node in the right position in a tree
+/** 
+ *  inserts a node in the right position in a tree
  *  sets parent/children appropriately for the new node
  *  updates children for the parent node, if any
  *  updates the node count 

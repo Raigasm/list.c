@@ -224,7 +224,6 @@ void getBefore(list *l, void *p)
     if (!atStart(l))
     {
         memcpy(p, l->current->prev->data, l->itemSize);
-        // DEBUG_PRINT("\ngetBefore:\nl->c->p->d = %s\nl->itemSize = %i", l->current->prev->data, l->itemSize);
     }
     else
     {
