@@ -191,7 +191,7 @@ static char * test_createFileListItem() {
 static char * test_addFileListItem() {
     beforeEach();
 
-    printf("testing addFileListItem \n");
+    // printf("testing addFileListItem \n");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -221,7 +221,7 @@ static char * test_printFileList() {
 
     beforeEach();
 
-    printf("testing addFileListItem \n");
+    // printf("testing addFileListItem \n");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";

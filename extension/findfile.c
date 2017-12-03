@@ -190,7 +190,7 @@ fileList *searchFor(char *input)
 int printFileList(fileList *input){
   int filesPrinted = 0;
   
-  printf("Files:\n");
+  printf("\nFiles (%i in total):\n", input->count);
   fileListItem *current = input->first;
   printf("%s\n", current->data->path);
   filesPrinted++;
