@@ -137,7 +137,31 @@ static char * test_getPath()
 }
 
 static char * test_createFileListItem() {
-    mu_assert("test_createFileListItem not yet implemented", false);
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    char *filenameTwo = "rai.exe";
+    char *pathTwo = "/some/other/path/to/rai.exe";
+    char *filenameThree = "feelings";
+    char *pathThree = "/trash/feelings";
+
+    fileListItem *first = createFileListItem(filename, path);
+    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
+    fileListItem *third = createFileListItem(filenameThree, pathThree);
+
+    mu_assert("file list item should be created successfully", first != NULL);
+    mu_assert("first file list item should have id of 0", first->id == 0);
+    mu_assert("first file list item should have correct name", first->data->name == 0);
+    mu_assert("first file list item should have correct path", first->data->path == 0);
+    mu_assert("second file list item should be created successfully", second != NULL);
+    mu_assert("second file list item should have id of 1", second->id == 1);
+    mu_assert("second file list item should have correct name", second->data->name == 1);
+    mu_assert("second file list item should have correct path", second->data->path == 1);
+    mu_assert("third file list item should be created successfully", third  != NULL);
+    mu_assert("third file list item should have id of 2", third->id == 2);
+    mu_assert("third file list item should have correct name", third->data->name  == 2);
+    mu_assert("third file list item should have correct path", third->data->path  == 2);
+
+    return 0;
 }
 
 static char * test_addFileListItem() {

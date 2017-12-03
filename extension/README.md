@@ -22,15 +22,20 @@ make
 ## Running Tests
 
 - We need some files to search from, so run `test_files/create_files.sh` to create 100 tiny text files with random names.
-- `make test && ./findfile`
+
+
+```
+cd extension
+make test
+./findfile
+```
 
 ## Libraries Used
+
 - [Minunit (for unit testing)](http://www.jera.com/techinfo/jtns/jtn002.html) 
 - [tinydir (very small platform agnostic C directory and file reader)](https://github.com/cxong/tinydir)
-
 
 ## References
 
 - https://stackoverflow.com/questions/298510/how-to-get-the-current-directory-in-a-c-program
 - https://en.wikipedia.org/wiki/Binary_search_tree
-- 

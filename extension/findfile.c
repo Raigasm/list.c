@@ -92,6 +92,10 @@ fileListItem *createFileListItem(char *name, char *path) {
   return 0;
 }
 
+fileList *addFileListItem(fileListItem *input, fileList *output){
+  return 0;
+}
+
     // Wraps file data in a node object (without any references to parents etc)
     node *createNode(fileInfo *input, node *output)
 {
