@@ -95,18 +95,18 @@ int configure(char *query, char *directory) {
   MODEL.LIST = malloc(sizeof(fileList));
   MODEL.TREE = malloc(sizeof(binarySearchTree));
   
-  DEBUG_PRINT("initialized model for %s", directory);
+  DEBUG_PRINT("initialized model for %s\n", directory);
 
   return 0;
 }
 
-    fileListItem *createFileListItem(char *name, char *path)
+fileListItem *createFileListItem(char *name, char *path)
 {
   fileListItem *result = malloc(sizeof(fileListItem));
   fileInfo *data = malloc(sizeof(fileInfo));
   data->name = name;
   data->path = path;
-  result->id = 0;
+  result->id = MODEL.COUNT++;
   result->data = data;
   return result;
 }

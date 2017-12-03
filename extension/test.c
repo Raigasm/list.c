@@ -15,6 +15,12 @@ bool sameString (char *first, char *second){
     return strcmp(first, second) == 0;
 }
 
+void beforeEach (void) {
+    char *testPath = "test_files";
+    char *testQuery = "test";
+    configure(testQuery, testPath);
+}
+
 static char * test_copyString()
 {
     char *foo = "foo";
@@ -69,6 +75,8 @@ static char * test_isLeaf()
     printf("running test for isLeaf\n");
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
+
+    
     fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
     data->name = filename;
     data->path = path;
@@ -103,15 +111,15 @@ static char * test_isLeaf()
 
 static char *test_configure()
 {
-    char *testPath = "test_files";
-    char *testQuery = "test";
-    configure(testQuery, testPath);
+    beforeEach();
     mu_assert("COUNT should be set properly", MODEL.COUNT == 0);
-    mu_assert("DIRECTORY should be set properly", strcmp(testPath, MODEL.DIRECTORY) == 0);
+    mu_assert("DIRECTORY should be set properly", strcmp("test_files", MODEL.DIRECTORY) == 0);
     mu_assert("ALGORITHM should be set properly", MODEL.ALGORITHM == 0);
     mu_assert("LIST should be set properly", MODEL.LIST != NULL);
     mu_assert("TREE  should be set properly", MODEL.TREE != NULL);
-        return 0;
+    mu_assert("COUNT  should be set properly", MODEL.COUNT == 0);
+    
+    return 0;
 }
 
 static char * test_getFilename()
