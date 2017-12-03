@@ -19,6 +19,7 @@ void beforeEach (void) {
     char *testPath = "test_files";
     char *testQuery = "test";
     configure(testQuery, testPath);
+    DEBUG_PRINT("configuring model\n");
 }
 
 static char * test_copyString()
@@ -213,13 +214,32 @@ static char * test_addFileListItem() {
     mu_assert("third item should be accessible from second item", MODEL.LIST->first->next->next->id == 2);
     mu_assert("third item should have correct data", strcmp(MODEL.LIST->first->next->next->data->name, "feelings") == 0);
     mu_assert("count should be correct", MODEL.LIST->count == 3);
-    mu_assert("MODEL.LIST.last should point to last item", MODEL.LIST->last->id == 3);
-
-
+    mu_assert("MODEL.LIST.last should point to last item", MODEL.LIST->last->id == 2);
 }
 
 static char * test_printFileList() {
-    mu_assert("test_printFileList not yet implemented", false);
+
+    beforeEach();
+
+    printf("testing addFileListItem \n");
+
+    char *filename = "foo.bar";
+    char *path = "/full/path/to/foo.bar";
+    char *filenameTwo = "rai.exe";
+    char *pathTwo = "/some/other/path/to/rai.exe";
+    char *filenameThree = "feelings";
+    char *pathThree = "/trash/feelings";
+
+    fileListItem *first = createFileListItem(filename, path);
+    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
+    fileListItem *third = createFileListItem(filenameThree, pathThree);
+
+    addFileListItem(first);
+    addFileListItem(second);
+    addFileListItem(third);
+
+    mu_assert("printFileList should return 0", printFileList(MODEL.LIST) == 0);
+    return 0;
 }
 
 static char * test_getDirectoryContents()

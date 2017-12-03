@@ -74,8 +74,8 @@ int configure(char *query, char *directory) {
   MODEL.COUNT = 0;
   MODEL.DIRECTORY = directory;
   MODEL.ALGORITHM = 0;
-  MODEL.LIST = malloc(sizeof(fileList));
-  MODEL.TREE = malloc(sizeof(binarySearchTree));
+  MODEL.LIST = (fileList *) malloc(sizeof(fileList));
+  MODEL.TREE = (binarySearchTree *) malloc(sizeof(binarySearchTree));
   
   DEBUG_PRINT("initialized model for %s\n", directory);
 
@@ -114,15 +114,17 @@ fileListItem *getLastFile(){
 fileList *addFileListItem(fileListItem *input){
   bool successful;
   if (MODEL.LIST->first == NULL && input != NULL){
-    DEBUG_PRINT("+first\n");
+    // DEBUG_PRINT("+first\n");
     MODEL.LIST->first = input;
+    MODEL.LIST->last = input;
     successful = true;
-  } else if (input != NULL && MODEL.LIST->first != NULL) {
+  } else if (MODEL.LIST->first != NULL) {
     // TODO: fix segfault
     fileListItem *last = getLastFile();
     last->next = input;
+    MODEL.LIST->last = input;
     successful = true;
-    DEBUG_PRINT("+1 ");
+    // DEBUG_PRINT("+1 ");
   } else {
     successful = false;
   }
@@ -186,6 +188,23 @@ fileList *searchFor(char *input)
 // prints a file list to stdout
 // returns 0 if successful, otherwise 1
 int printFileList(fileList *input){
-  return 0;  
+  int filesPrinted = 0;
+  
+  printf("Files:\n");
+  fileListItem *current = input->first;
+  printf("%s\n", current->data->path);
+  filesPrinted++;
+  
+  while(current->next != NULL){
+    printf("%s\n", current->next->data->path);
+    filesPrinted++;
+    current = current->next;
+  }
+
+  if (filesPrinted > 0){
+    return 0;
+  } else {
+    return 1;
+  } 
 }
 
