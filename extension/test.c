@@ -136,6 +136,18 @@ static char * test_getPath()
     return 0;
 }
 
+static char * test_createFileListItem() {
+    mu_assert("test_createFileListItem not yet implemented", false);
+}
+
+static char * test_addFileListItem() {
+    mu_assert("test_addFileListItem not yet implemented", false);
+}
+
+static char * test_printFileList() {
+    mu_assert("test_printFileList not yet implemented", false);
+}
+
 static char * test_getDirectoryContents()
 {
     printf("running test for getDirectoryContents\n");
@@ -233,6 +245,9 @@ static char * all_tests () {
     mu_run_test(test_isLeaf);
     mu_run_test(test_getPath);
     mu_run_test(test_getFilename);
+    mu_run_test(test_createFileListItem);
+    mu_run_test(test_addFileListItem);
+    mu_run_test(test_printFileList);
     mu_run_test(test_getDirectoryContents);
     mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);
