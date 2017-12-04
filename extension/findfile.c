@@ -178,7 +178,17 @@ int node_insert(node *input, binarySearchTree *output)
 // transforms a FileList into a binary search tree
 binarySearchTree *tree_create(fileList *input)
 {
-  return 0;
+  binarySearchTree *output = malloc(sizeof(binarySearchTree));
+
+  fileListItem *current = input->first;
+
+  while(current != (fileListItem *) 0){
+    node *newNode = node_create(current->path);
+    node_insert(newNode, output);
+    current = current->next;
+  }
+
+  return output;
 }
 
 // memory cleanup
@@ -188,9 +198,25 @@ int tree_destroy()
   return 0;
 }
 
+node *search (node *root, char *query){
+  // Base Cases: root is null or key is present at root
+  if (root == NULL || strcmp(query, root->path) == 0){
+    return root;
+  }
+
+  // Key is greater than root's key
+  if (node_compare(root->path, path) > 0)
+    return search(root->rightChild, path);
+
+  // path is smaller than root's path
+  return search(root->leftChild, path);
+}
+
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
-fileList *tree_search(char *input)
+node *tree_search(binarySearchTree *source, char *query)
 {
-  return 0;
+  node *result;
+  search(source->root, query);  
+  return result;
 }
 

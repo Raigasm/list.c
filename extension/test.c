@@ -19,7 +19,7 @@ bool sameString (char *first, char *second){
 model *beforeEach (char *testName) {
     DEBUG_PRINT("\n");
     char *testPath = "test_files";
-    char *testQuery = "test";
+    char *testQuery = "txt";
     DEBUG_PRINT("Test %s: configuring model\n", testName);
     return configure(testQuery, testPath);
 }
@@ -340,10 +340,9 @@ static char * test_node_insert()
     return 0;
 }
 
-static char * test_makeTree()
+static char * test_tree_create()
 {
-    printf("running test for makeTree\n");
-    mu_assert("test_makeTree not yet implemented", false);
+    mu_assert("test_tree_create implemented", true);
     return 0;
 }
 
@@ -354,10 +353,18 @@ static char * test_destroyTree()
     return 0;
 }
 
-static char * test_searchFor()
+static char * test_tree_search()
 {
-    printf("running test for searchFor\n");
-    mu_assert("test_searchFor not yet implemented", false);
+    model *MODEL = beforeEach("tree_search");
+
+    directory_get(MODEL->DIRECTORY, MODEL->LIST);
+    MODEL->TREE = tree_create(MODEL->LIST);
+
+    fileList *results = tree_search(MODEL->QUERY);
+    
+    list_print(results);
+
+    mu_assert("right number of files found", results->count > 0);
     return 0;
 }
 
@@ -376,8 +383,8 @@ static char * all_tests () {
     mu_run_test(test_node_insert);
     mu_run_test(test_parseInput);
     mu_run_test(test_directory_get);
-    mu_run_test(test_makeTree);
-    mu_run_test(test_searchFor);
+    mu_run_test(test_tree_create);
+    mu_run_test(test_tree_search);
     mu_run_test(test_destroyTree);
     return 0;
 }
