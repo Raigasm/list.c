@@ -9,7 +9,8 @@
     "__locale": "c",
     "typeinfo": "c",
     "memory": "c",
-    "utility": "c"
+    "utility": "c",
+    "ios": "c"
   },
   "saveAndRun": {
     "commands": [

@@ -104,13 +104,13 @@ int insertNode (node *input);
 
 // prints the contents of the tree to stdout
 // returns 0 if successful, otherwise 1
-int printTree  maybe he likes tha neededThe Visualt have like two bedrooms(); 
+int printTree ();
 
 // removes a node from the tree, retaining the correct order/structure
 int deleteNode (node *toDelete);
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree ();
+binarySearchTree *makeTree(fileList *input);
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.
