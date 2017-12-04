@@ -1,13 +1,7 @@
 #include <stdbool.h>
+#include "filelist.h"
 #ifndef FINDFILE_H_
 #define FINDFILE_H_
-
-// represents each file
-typedef struct FileInfo
-{
-  char *name; // filename with extension
-  char *path;     // full file path
-} fileInfo;
 
 // wrapper for file data so that it can be used in the binary search tree
 typedef struct Node 
@@ -24,22 +18,6 @@ typedef struct BinarySearchTree
   struct Node *root; // the root node 
   int size; // number of nodes in the tree
 } binarySearchTree;
-
-// item in list of files 
-typedef struct FileListItem 
-{
-  int id; // starts at 0
-  struct FileInfo *data; 
-  struct FileListItem *next; // reference to next item
-} fileListItem;
-
-// a single-linked list of files
-typedef struct FileList 
-{
-  int count; // same as (last.id + 1) 
-  struct FileListItem *first; // should be a reference to item with id 0
-  struct FileListItem *last; // should be a reference to item with id (count - 1)
-} fileList;
 
 // configuration / model state object generated based off run parameters
 typedef struct Model
@@ -110,7 +88,7 @@ int printTree ();
 int deleteNode (node *toDelete);
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree(fileList *input);
+binarySearchTree *makeTree (fileList *input);
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.

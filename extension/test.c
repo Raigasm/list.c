@@ -1,6 +1,7 @@
 #include "debugprint.h"
 #include "minunit.h"
 #include "findfile.h"
+#include "filelist.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -162,8 +163,8 @@ static char * test_getPath()
     return 0;
 }
 
-static char * test_createFileListItem() {
-    model *MODEL = beforeEach("createFileListItem");
+static char * test_item_create() {
+    model *MODEL = beforeEach("item_create");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -172,9 +173,9 @@ static char * test_createFileListItem() {
     char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = createFileListItem(filename, path);
-    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
-    fileListItem *third = createFileListItem(filenameThree, pathThree);
+    fileListItem *first = item_create(filename);
+    fileListItem *second = item_create(filenameTwo);
+    fileListItem *third = item_create(filenameThree);
 
     mu_assert("file list item should be created successfully", first != NULL);
     mu_assert("first file list item should have id of 0", first->id == 0);
@@ -192,8 +193,8 @@ static char * test_createFileListItem() {
     return 0;
 }
 
-static char * test_addFileListItem() {
-    model *MODEL = beforeEach("addFileListItem");
+static char * test_item_add() {
+    model *MODEL = beforeEach("item_add");
 
     char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
@@ -202,13 +203,13 @@ static char * test_addFileListItem() {
     char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = createFileListItem(filename, path);
-    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
-    fileListItem *third = createFileListItem(filenameThree, pathThree);
+    fileListItem *first = item_create(filename);
+    fileListItem *second = item_create(filenameTwo);
+    fileListItem *third = item_create(filenameThree);
 
-    addFileListItem(first);
-    addFileListItem(second);
-    addFileListItem(third);
+    item_add(first);
+    item_add(second);
+    item_add(third);
 
     mu_assert("first item should be added", MODEL->LIST->first != NULL);
     mu_assert("first item should be added with correct id", MODEL->LIST->first != NULL);
@@ -231,13 +232,13 @@ static char * test_printFileList() {
     char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = createFileListItem(filename, path);
-    fileListItem *second = createFileListItem(filenameTwo, pathTwo);
-    fileListItem *third = createFileListItem(filenameThree, pathThree);
+    fileListItem *first = item_create(filename);
+    fileListItem *second = item_create(filenameTwo);
+    fileListItem *third = item_create(filenameThree);
 
-    addFileListItem(first);
-    addFileListItem(second);
-    addFileListItem(third);
+    item_add(first);
+    item_add(second);
+    item_add(third);
 
     mu_assert("printFileList should return 0", printFileList(MODEL->LIST) == 0);
     return 0;
@@ -344,8 +345,8 @@ static char * all_tests () {
     mu_run_test(test_configure);
     mu_run_test(test_getPath);
     mu_run_test(test_getFilename);
-    mu_run_test(test_createFileListItem);
-    mu_run_test(test_addFileListItem);
+    mu_run_test(test_item_create);
+    mu_run_test(test_item_add);
     mu_run_test(test_printFileList);
     mu_run_test(test_getDirectoryContents);
     mu_run_test(test_printInstructions);
