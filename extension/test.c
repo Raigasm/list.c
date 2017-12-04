@@ -269,18 +269,12 @@ static char * test_directory_get()
     model *MODEL = beforeEach("getDirectoryContents");
     binarySearchTree *tree = MODEL->TREE;
     
-    directory_get("./test_files/");
+    directory_get("./test_files/", MODEL->LIST);
     
-    mu_assert("test_getDirectoryContents not yet implemented", false); 
+    mu_assert("getting directory updates filelist with correct number of files", MODEL->LIST->count > 0);
     return 0;
 }
 
-static char * test_printInstructions()
-{
-    printf("running test for printInstructions\n");
-    mu_assert("test_printInstructions not yet implemented", false);
-    return 0;
-}
 
 static char * test_parseInput()
 {
@@ -305,8 +299,20 @@ static char * test_customDirectory()
 
 static char * test_node_create()
 {
-    printf("running test for createNode\n");
-    mu_assert("test_createNode not yet implemented", false);
+    model *MODEL = beforeEach("node_create");
+
+    char *path_one = "/foo/bar";
+    char *path_two = "/i/wish/she/felt/the/same/way";
+    char *path_three = "/tree/to/the/future";
+
+    node *node_one = node_create(path_one);
+    node *node_two = node_create(path_two);
+    node *node_three = node_create(path_three);
+
+    mu_assert("node_one should be created successfully", sameString(node_one->path, "/foo/bar"));
+    mu_assert("node_two should be created successfully", sameString(node_two->path, "/i/wish/she/felt/the/same/way"));
+    mu_assert("node_three should be created successfully", sameString(node_three->path, "/tree/to/the/future"));
+
     return 0;
 }
 
@@ -315,14 +321,24 @@ static char * test_node_insert()
     model *MODEL = beforeEach("insert node");
     binarySearchTree *tree = MODEL->TREE;
 
-    mu_assert("test_insertNode not yet implemented", false);
-    return 0;
-}
+    char *path_one = "beta";
+    char *path_two = "alpha";
+    char *path_three = "gamma";
 
-static char * test_tree_print()
-{
-    printf("running test for printTree\n");
-    mu_assert("test_printTree not yet implemented", false);
+    node *node_one = node_create(path_one);
+    node *node_two = node_create(path_two);
+    node *node_three = node_create(path_three);
+
+    mu_assert("size starts out at 0", MODEL->TREE->size == 0);
+    node_insert(node_one, MODEL->TREE);
+    mu_assert("size increases to 1", MODEL->TREE->size == 1);
+    node_insert(node_two, MODEL->TREE);
+    mu_assert("size increases to 2", MODEL->TREE->size == 2);
+    node_insert(node_three, MODEL->TREE);
+    mu_assert("size increases to 3", MODEL->TREE->size == 3);
+
+    mu_assert("size updated to reflect inserted nodes", MODEL->TREE->size == 3);
+    
     return 0;
 }
 
@@ -368,11 +384,9 @@ static char * all_tests () {
     mu_run_test(test_node_create);
     mu_run_test(test_node_insert);
     mu_run_test(test_directory_get);
-    mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);
     mu_run_test(test_currentDirectory);
     mu_run_test(test_customDirectory);
-    mu_run_test(test_tree_print);
     mu_run_test(test_makeTree);
     mu_run_test(test_destroyTree);
     mu_run_test(test_searchFor);

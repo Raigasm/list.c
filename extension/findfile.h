@@ -49,14 +49,14 @@ char *getPath(char *input, char *output);
 model *configure (char *query, char *directory);
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *directory_get (char *directory);
+fileList *directory_get (char *directory, fileList *output);
 
 // prints usage instructions to stdout
 void printInstructions (void);
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG) 
 // returns 0 if input is valid and configuration successful, otherwise 1
-int parseInput (char *input); 
+int parseInput (int argc, char *argv[]); 
 
 // Wraps file data in a node object (without any references to parents etc)
 node *node_create(char *input);
@@ -69,10 +69,6 @@ node *node_create(char *input);
  *  NB: returns 0 if unsuccessful, 
  **/
 int node_insert(node *input, binarySearchTree *output);
-
-// prints the contents of the tree to stdout
-// returns 0 if successful, otherwise 1
-int printTree ();
 
 // removes a node from the tree, retaining the correct order/structure
 int node_delete (node *toDelete);

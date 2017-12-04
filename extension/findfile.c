@@ -41,9 +41,23 @@ bool isLeaf(node *input)
 }
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *directory_get(char *path)
+fileList *directory_get(char *path, fileList *output)
 {
-  
+  tinydir_dir dir;
+  int i;
+  tinydir_open_sorted(&dir, path);
+
+  DEBUG_PRINT("Found %i files in directory %s\n", dir.n_files, path);
+  for (i = 0; i < dir.n_files; i++)
+  {
+    tinydir_file file;
+    tinydir_readfile_n(&dir, &file, i);
+
+    fileListItem *newest = item_create(i, file.name);
+    item_add(newest, output);
+  }
+
+  tinydir_close(&dir);
 }
 
 
@@ -54,10 +68,24 @@ void printInstructions(void)
 }
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG)
-// returns 0 if input is valid and configuration successful, otherwise 1
-int parseInput(char *input)
+// returns 0 if successful, 1 if error
+int parseInput(int argc, char *argv[])
 {
-  return 0; 
+  char *query; 
+  char *directory;
+
+  if(argc = 1){
+    printInstructions();
+    return 1;
+  } else if (argc >= 2){
+    query = argv[1];
+    if (argc == 2) {
+      directory = "./";
+    } else {
+      directory = argv[2];
+    }
+    DEBUG_PRINT("searching for %s in %s", query, directory);
+  }
 }
 
 // initializes model
@@ -78,7 +106,9 @@ model *configure(char *query, char *directory) {
 // Wraps file data in a node object (without any references to parents etc)
 node *node_create(char *input)
 {
-  return 0;
+  node *output = (node *) malloc(sizeof(node));
+  output->path = input;
+  return output;
 }
 
 
@@ -129,18 +159,12 @@ int node_insert(node *input, binarySearchTree *output)
         }
       } else {
         DEBUG_PRINT("duplicate file detected, discarding\n.");
+        inserted = true;
       }
     }
   }
 
   output->size++;
-    return 0;
-}
-
-// prints the contents of the tree to stdout
-// returns 0 if successful, otherwise 1
-int tree_print(binarySearchTree *input)
-{
   return 0;
 }
 
