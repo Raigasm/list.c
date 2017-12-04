@@ -257,16 +257,17 @@ static char * test_node_compare() {
 
     DEBUG_PRINT("a/b comparison = %i\n", node_compare(a,b));
 
-    mu_assert("compare should return -1 for greater b", node_compare(a,b) == -1);
-    mu_assert("compare should return 1 for greater b", node_compare(b,a) == 1);
-    mu_assert("compare should return 1 for greater b (again)", node_compare(c,a) == 1);
-    mu_assert("compare should return 1 for greater b (again #2)", node_compare(c,b) == 1);
+    mu_assert("compare should return negative for greater b", node_compare(a,b) < 0);
+    mu_assert("compare should return positive for lesser b", node_compare(b,a) > 0);
+    mu_assert("compare should return positive for lesser b (again)", node_compare(c,a) > 0);
+    mu_assert("compare should return positive for greater b (again #2)", node_compare(c,b) > 0);
     mu_assert("compare should return 0 if equal", node_compare(a,a) == 0);
 }
 
 static char * test_directory_get()
 {
     model *MODEL = beforeEach("getDirectoryContents");
+    binarySearchTree *tree = MODEL->TREE;
     
     directory_get("./test_files/");
     
@@ -311,7 +312,9 @@ static char * test_createNode()
 
 static char * test_insertNode()
 {
-    printf("running test for insertNode\n");
+    model *MODEL = beforeEach("insert node");
+
+    
     mu_assert("test_insertNode not yet implemented", false);
     return 0;
 }

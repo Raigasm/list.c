@@ -70,6 +70,7 @@ model *configure(char *query, char *directory) {
   MODEL->LIST->count = 0;
   MODEL->TREE = (binarySearchTree *) malloc(sizeof(binarySearchTree));
   MODEL->TREE->size = 0;
+  MODEL->TREE->root = (node *) 0;
 
   return MODEL;
 }
@@ -98,11 +99,42 @@ int node_compare(node *a, node *b){
 int node_insert(node *input, binarySearchTree *output)
 {
   // check if root exists
-  // if root doesn't exist, create root
-  // SEE  https://en.wikipedia.org/wiki/Binary_search_tree#Operations#Insertion
-  // update size
+  if (output->root == (node *) 0){
+    // if root doesn't exist, create root
+    output->root = input;
+  } else {
+    bool inserted = false;
+    node *parent = output->root;
+    
+    while(!inserted){
+      int comparison = node_compare(parent, input);
+      if (comparison < 0){ // new node is lesser
+        if (parent->leftChild == (node *) 0){
+          input->parent = parent;
+          parent->leftChild = input;
+          inserted = true;
+        } else {
+          parent = parent->leftChild;
+        }
+      } else if (comparison > 0){ // new node is greater
+        if (parent->rightChild == (node *)0)
+        {
+          input->parent = parent;
+          parent->rightChild = input;
+          inserted = true;
+        }
+        else
+        {
+          parent = parent->rightChild;
+        }
+      } else {
+        DEBUG_PRINT("duplicate file detected, discarding\n.");
+      }
+    }
+  }
 
-  return 0;
+  output->size++;
+    return 0;
 }
 
 // prints the contents of the tree to stdout
