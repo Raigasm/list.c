@@ -76,7 +76,7 @@ int parseInput(int number_of_arg, char *all_args[])
   
   DEBUG_PRINT("parseInput: %i arguments\n", number_of_arg);
   
-  if(number_of_arg = 1){
+  if(number_of_arg == 1){
     printInstructions();
     return 1;
   }

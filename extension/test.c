@@ -276,36 +276,22 @@ static char * test_directory_get()
 }
 
 
-// static char * test_parseInput()
-// {
-//     printf("running test for parseInput\n");
+static char * test_parseInput()
+{
+    printf("running test for parseInput\n");
 
-//     char *arg_one = "findfile";
-//     char *arg_two = "txt";
-//     char *arg_three = "./test_files";
+    char *arg_one = "findfile";
+    char *arg_two = "txt";
+    char *arg_three = "./test_files";
 
-//     char *all_arguments[255];
+    char *all_arguments[255];
     
-//     all_arguments[0] = arg_one;
-//     mu_assert("parseInput returns 1 if invalid number of arguments", parseInput(1, all_arguments) == 1);
-//     all_arguments[1] = arg_two;
-//     mu_assert("parseInput returns 0 if only query specified", parseInput(2, all_arguments) == 0);
-//     all_arguments[2] = arg_three;
-//     mu_assert("parseInput returns 0 if query + location specified", parseInput(3, all_arguments) == 0);
-//     return 0;
-// }
-
-static char * test_currentDirectory()
-{
-    printf("running test for currentDirectory\n");
-    mu_assert("test_currentDirectory not yet implemented", false);
-    return 0;
-}
-
-static char * test_customDirectory()
-{
-    printf("running test for customDirectory\n");
-    mu_assert("test_customDirectory not yet implemented", false);
+    all_arguments[0] = arg_one;
+    mu_assert("parseInput returns 1 if invalid number of arguments", parseInput(1, all_arguments) == 1);
+    all_arguments[1] = arg_two;
+    mu_assert("parseInput returns 0 if only query specified", parseInput(2, all_arguments) == 0);
+    all_arguments[2] = arg_three;
+    mu_assert("parseInput returns 0 if query + location specified", parseInput(3, all_arguments) == 0);
     return 0;
 }
 
@@ -375,13 +361,6 @@ static char * test_searchFor()
     return 0;
 }
 
-static char * test_printResults()
-{
-    printf("running test for printResults\n");
-    mu_assert("test_printResults not yet implemented", false);
-    return 0;
-}
-
 static char * all_tests () {
     mu_run_test(test_copyString);
     mu_run_test(test_isRoot);
@@ -395,11 +374,11 @@ static char * all_tests () {
     mu_run_test(test_node_compare);
     mu_run_test(test_node_create);
     mu_run_test(test_node_insert);
+    mu_run_test(test_parseInput);
     mu_run_test(test_directory_get);
     mu_run_test(test_makeTree);
-    mu_run_test(test_destroyTree);
     mu_run_test(test_searchFor);
-    mu_run_test(test_printResults);
+    mu_run_test(test_destroyTree);
     return 0;
 }
 
