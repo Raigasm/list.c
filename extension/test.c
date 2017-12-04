@@ -303,33 +303,26 @@ static char * test_customDirectory()
     return 0;
 }
 
-static char * test_createNode()
+static char * test_node_create()
 {
     printf("running test for createNode\n");
     mu_assert("test_createNode not yet implemented", false);
     return 0;
 }
 
-static char * test_insertNode()
+static char * test_node_insert()
 {
     model *MODEL = beforeEach("insert node");
+    binarySearchTree *tree = MODEL->TREE;
 
-    
     mu_assert("test_insertNode not yet implemented", false);
     return 0;
 }
 
-static char * test_printTree()
+static char * test_tree_print()
 {
     printf("running test for printTree\n");
     mu_assert("test_printTree not yet implemented", false);
-    return 0;
-}
-
-static char * test_deleteNode()
-{
-    printf("running test for deleteNode\n");
-    mu_assert("test_deleteNode not yet implemented", false);
     return 0;
 }
 
@@ -372,16 +365,14 @@ static char * all_tests () {
     mu_run_test(test_item_add);
     mu_run_test(test_list_print);
     mu_run_test(test_node_compare);
-    mu_run_test(test_insertNode);
+    mu_run_test(test_node_create);
+    mu_run_test(test_node_insert);
     mu_run_test(test_directory_get);
     mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);
     mu_run_test(test_currentDirectory);
     mu_run_test(test_customDirectory);
-    mu_run_test(test_createNode);
-    mu_run_test(test_insertNode);
-    mu_run_test(test_printTree);
-    mu_run_test(test_deleteNode);
+    mu_run_test(test_tree_print);
     mu_run_test(test_makeTree);
     mu_run_test(test_destroyTree);
     mu_run_test(test_searchFor);

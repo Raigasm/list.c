@@ -117,7 +117,7 @@ int node_insert(node *input, binarySearchTree *output)
           parent = parent->leftChild;
         }
       } else if (comparison > 0){ // new node is greater
-        if (parent->rightChild == (node *)0)
+        if (parent->rightChild == (node *) 0)
         {
           input->parent = parent;
           parent->rightChild = input;
