@@ -48,18 +48,8 @@ char *getPath(char *input, char *output);
 // initializes model 
 model *configure (char *query, char *directory);
 
-// wraps file data in a file list item
-fileListItem *createFileListItem (char *name, char *path);
-
-// adds an item to a file list and attaching it to the last file in the list
-fileList *addFileListItem (fileListItem *input);
-
-// prints a file list to stdout
-// returns 0 if successful, otherwise 1
-int printFileList(fileList *input);
-
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *getDirectoryContents (char *directory);
+fileList *directory_get (char *directory);
 
 // prints usage instructions to stdout
 void printInstructions (void);
@@ -69,7 +59,7 @@ void printInstructions (void);
 int parseInput (char *input); 
 
 // Wraps file data in a node object (without any references to parents etc)
-node *createNode(char *input, node *output);
+node *node_create(char *input);
 
 /** 
  *  inserts a node in the right position in a tree
@@ -78,23 +68,23 @@ node *createNode(char *input, node *output);
  *  updates the node count 
  *  NB: returns 0 if unsuccessful, 
  **/
-int insertNode (node *input); 
+int node_insert(node *input, binarySearchTree *output);
 
 // prints the contents of the tree to stdout
 // returns 0 if successful, otherwise 1
 int printTree ();
 
 // removes a node from the tree, retaining the correct order/structure
-int deleteNode (node *toDelete);
+int node_delete (node *toDelete);
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree (fileList *input);
+binarySearchTree *tree_create (fileList *input);
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.
-int destroyTree ();
+int tree_destroy ();
 
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
-fileList *searchFor (char *input);
+fileList *tree_search (char *input);
 
 #endif

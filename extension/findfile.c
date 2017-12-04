@@ -41,7 +41,7 @@ bool isLeaf(node *input)
 }
 
 // traverses a directory on the user's filesystem and stores it in a specified FileList
-fileList *getDirectoryContents(char *path)
+fileList *directory_get(char *path)
 {
   
 }
@@ -75,7 +75,7 @@ model *configure(char *query, char *directory) {
 }
 
 // Wraps file data in a node object (without any references to parents etc)
-node *createNode(char *input, node *output)
+node *node_create(char *input)
 {
   return 0;
 }
@@ -86,46 +86,34 @@ node *createNode(char *input, node *output)
  *  updates the node count 
  *  NB: returns 0 if unsuccessful, 
  **/
-int insertNode(node *input)
+int node_insert(node *input, binarySearchTree *output)
 {
   return 0;
 }
 
 // prints the contents of the tree to stdout
 // returns 0 if successful, otherwise 1
-int printTree()
-{
-  return 0;
-}
-
-// removes a node from the tree, retaining the correct order/structure
-int deleteNode(node *toDelete)
+int tree_print(binarySearchTree *input)
 {
   return 0;
 }
 
 // transforms a FileList into a binary search tree
-binarySearchTree *makeTree(fileList *input)
+binarySearchTree *tree_create(fileList *input)
 {
   return 0;
 }
 
 // memory cleanup
 // returns 0 if successful. Burns down your home if unsuccessful.
-int destroyTree()
+int tree_destroy()
 {
   return 0;
 }
 
 // traverses the tree to find a given search term (TODO: case insensitive, TODO: partial matches accepted?), storing the results in a FileList
-fileList *searchFor(char *input)
+fileList *tree_search(char *input)
 {
   return 0;
-}
-
-// prints a file list to stdout
-// returns 0 if successful, otherwise 1
-int printFileList(fileList *input){
-
 }
 

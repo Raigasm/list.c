@@ -245,11 +245,11 @@ static char *test_list_first()
     return 0;
 }
 
-static char * test_getDirectoryContents()
+static char * test_directory_get()
 {
     model *MODEL = beforeEach("getDirectoryContents");
     
-    getDirectoryContents("./test_files/");
+    directory_get("./test_files/");
     
     mu_assert("test_getDirectoryContents not yet implemented", false); 
     return 0;
@@ -350,7 +350,7 @@ static char * all_tests () {
     mu_run_test(test_item_add);
     mu_run_test(test_list_print);
     mu_run_test(test_insertNode);
-    mu_run_test(test_getDirectoryContents);
+    mu_run_test(test_directory_get);
     mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);
     mu_run_test(test_currentDirectory);

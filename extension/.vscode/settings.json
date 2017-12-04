@@ -11,7 +11,8 @@
     "memory": "c",
     "utility": "c",
     "ios": "c",
-    "list": "c"
+    "list": "c",
+    "bitset": "c"
   },
   "saveAndRun": {
     "commands": [
