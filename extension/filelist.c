@@ -22,13 +22,31 @@ fileListItem *item_add(fileListItem *input, fileList *output)
     currentLast->next = input;
   }
 
+  DEBUG_PRINT("+ %s\n", input->path);
+
   output->count++;
 }
 
 // list functions
-void list_print(fileList *input)
+char *list_print(fileList *input)
 {
-  DEBUG_PRINT("not yet implemented :X\n");
+  char result[10000] = "Files:\n";
+
+  fileListItem *current = input->first;
+
+  bool traversing = true;
+  while(traversing) {
+    if (current->next == (fileListItem *)0) {
+      traversing = false;
+    }
+    strcat(result, current->path);
+    strcat(result, "\n");
+    current = current->next;
+  }
+
+  DEBUG_PRINT("File List:\n%s", result);
+
+  return result;
 }
 
 fileListItem *list_last(fileList *input)

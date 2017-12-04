@@ -20,10 +20,9 @@ typedef struct FileList
 // item functions
 fileListItem *item_create(int id, char *name);
 fileListItem *item_add(fileListItem *input, fileList *output);
-void *item_remove(int id);
 
 // list functions
-void list_print(fileList *input);
+char *list_print(fileList *input);
 fileListItem *list_last(fileList *input);
 fileListItem *list_first(fileList *input);
 int list_count(fileList *input);

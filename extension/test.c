@@ -182,7 +182,8 @@ static char * test_list_print() {
     item_add(second, MODEL->LIST);
     item_add(third, MODEL->LIST);
 
-    mu_assert("printFileList should return 0", printFileList(MODEL->LIST) == 0);
+    char *result = list_print(MODEL->LIST);
+    mu_assert("list_print should return the correct string", sameString(result, "Files:\n/full/path/to/foo.bar\n/some/other/path/to/rai.exe\n/trash/feelings\n"));
     return 0;
 }
 
@@ -347,7 +348,6 @@ static char * all_tests () {
     mu_run_test(test_list_last);
     mu_run_test(test_list_first);
     mu_run_test(test_item_add);
-    mu_run_test(test_item_remove);
     mu_run_test(test_list_print);
     mu_run_test(test_insertNode);
     mu_run_test(test_getDirectoryContents);
