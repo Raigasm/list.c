@@ -396,8 +396,6 @@ static char * all_tests () {
     mu_run_test(test_node_create);
     mu_run_test(test_node_insert);
     mu_run_test(test_directory_get);
-    mu_run_test(test_currentDirectory);
-    mu_run_test(test_customDirectory);
     mu_run_test(test_makeTree);
     mu_run_test(test_destroyTree);
     mu_run_test(test_searchFor);
