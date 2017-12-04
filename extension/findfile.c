@@ -88,8 +88,6 @@ fileList *getDirectoryContents(char *path)
 
   tinydir_close(&dir);
 
-
-
   printFileList(MODEL->LIST);
   
   return MODEL->LIST;
@@ -119,8 +117,6 @@ model *configure(char *query, char *directory) {
   MODEL->LIST->count = 0;
   MODEL->TREE = (binarySearchTree *) malloc(sizeof(binarySearchTree));
   MODEL->TREE->size = 0;
-  
-  // DEBUG_PRINT("initialized model for %s\n", directory);
 
   return MODEL;
 }
@@ -140,7 +136,17 @@ fileListItem *createFileListItem(char *name, char *path)
 
 fileListItem *getLastFile(){
   DEBUG_PRINT("finding last file\n");
-  return MODEL->LIST->last;
+
+  fileListItem *last = MODEL->LIST->first;
+  
+  if(last->next != (fileListItem *) 0){
+    while (last != (fileListItem *) 0)
+    {
+      last = last->next;
+    }
+  }
+  
+  return last;
 }
 
 fileList *addFileListItem(fileListItem *input){
@@ -150,7 +156,6 @@ fileList *addFileListItem(fileListItem *input){
   if (MODEL->LIST->count == 0){
     DEBUG_PRINT("setting first file\n");
     MODEL->LIST->first = input;
-    MODEL->LIST->last = input;
   } else {
     DEBUG_PRINT("adding to existing list.\n");
     fileListItem *last = getLastFile();
