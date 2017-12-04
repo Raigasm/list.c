@@ -69,22 +69,29 @@ void printInstructions(void)
 
 // validates/parses command line arguments and sets up the configuration store (CONFIG)
 // returns 0 if successful, 1 if error
-int parseInput(int argc, char *argv[])
+int parseInput(int number_of_arg, char *all_args[])
 {
   char *query; 
   char *directory;
-
-  if(argc = 1){
+  
+  DEBUG_PRINT("parseInput: %i arguments\n", number_of_arg);
+  
+  if(number_of_arg = 1){
     printInstructions();
     return 1;
-  } else if (argc >= 2){
-    query = argv[1];
-    if (argc == 2) {
+  }
+  
+  if (number_of_arg == 2 || number_of_arg == 3){
+    DEBUG_PRINT("correct number of arguments supplied\n");
+    query = all_args[1];
+    if (number_of_arg == 2) {
       directory = "./";
     } else {
-      directory = argv[2];
+      directory = all_args[2];
     }
     DEBUG_PRINT("searching for %s in %s", query, directory);
+    configure(query, directory);
+    return 0;
   }
 }
 
