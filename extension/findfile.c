@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tinydir.h"
 #include "filelist.h"
+#include "tinydir.h"
 
 model *MODEL;
 
@@ -40,23 +40,10 @@ bool isLeaf(node *input)
   }
 }
 
-// returns the filename of a specific file
-char *getFilename(fileInfo *input, char *output)
-{
-  copyString(input->name, output);
-  return output;
-}
-
-// gets the full path of a specific file
-char *getPath(fileInfo *input, char *output){
-  copyString(input->path, output);
-  return output;
-}
-
 // traverses a directory on the user's filesystem and stores it in a specified FileList
 fileList *getDirectoryContents(char *path)
 {
-
+  
 }
 
 
@@ -88,9 +75,9 @@ model *configure(char *query, char *directory) {
 }
 
 // Wraps file data in a node object (without any references to parents etc)
-node *createNode(fileInfo *input, node *output)
+node *createNode(char *input, node *output)
 {
-  return 0;  
+  return 0;
 }
 
 /** inserts a node in the right position in a tree

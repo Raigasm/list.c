@@ -10,7 +10,8 @@
     "typeinfo": "c",
     "memory": "c",
     "utility": "c",
-    "ios": "c"
+    "ios": "c",
+    "list": "c"
   },
   "saveAndRun": {
     "commands": [

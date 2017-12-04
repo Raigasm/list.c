@@ -51,20 +51,16 @@ static char * test_isRoot()
 {   
     model *MODEL = beforeEach("isRoot");
     printf("running test for isRoot\n");
-    char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
-    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
-    data->name = filename;
-    data->path = path;
 
     node *root = malloc(sizeof(node));
-    root->data = data;
+    root->path = path;
     root->leftChild = NULL;
     root->rightChild = NULL;
     root->parent = NULL; 
 
     node *notRoot = malloc(sizeof(node));
-    notRoot->data = data;
+    notRoot->path = path;
     notRoot->leftChild = NULL;
     notRoot->rightChild = NULL;
     notRoot->parent = root;
@@ -79,31 +75,25 @@ static char * test_isLeaf()
 {
     model *MODEL = beforeEach("isLeaf");
     printf("running test for isLeaf\n");
-    char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
-
-    
-    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
-    data->name = filename;
-    data->path = path;
 
     node *leaf = malloc(sizeof(node));
     node *notLeaf = malloc(sizeof(node));
     node *anotherLeaf = malloc(sizeof(node));
 
-    leaf->data = data;
+    leaf->path = path;
     leaf->leftChild = NULL;
     leaf->rightChild = NULL;
     leaf->parent = notLeaf;
 
  
-    anotherLeaf->data = data;
+    anotherLeaf->path = path;
     anotherLeaf->leftChild = NULL;
     anotherLeaf->rightChild = NULL;
     anotherLeaf->parent = notLeaf;
 
 
-    notLeaf->data = data;
+    notLeaf->path = path;
     notLeaf->leftChild = leaf;
     notLeaf->rightChild = anotherLeaf;
     notLeaf->parent = notLeaf;
@@ -128,67 +118,26 @@ static char *test_configure()
     return 0;
 }
 
-static char * test_getFilename()
-{
-    printf("running test for getFilename\n");
-    char *filename = "foo.bar";
-    char *path = "/full/path/to/foo.bar";
-    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
-    data->name = filename;
-    data->path = path;
-    char output[7];
-    getFilename(data, output);
-    int result = strcmp(output, "foo.bar");
-    
-    mu_assert("getFilename should return filename", result == 0);
-    return 0;
-}
-
-static char * test_getPath()
-{
-    printf("running test for getPath\n");
-    char *filename = "foo.bar";
-    char *path = "/full/path/to/foo.bar";
-    fileInfo *data = malloc(sizeof(fileList)); // TODO: release memory
-    data->name = filename;
-    data->path = path;
-    DEBUG_PRINT("data.name = %s\n", data->name);
-    DEBUG_PRINT("data.path = %s\n", data->path);
-    char output[22];
-    getPath(data, output);
-    printf("output is %s\n", output);
-    int result = strcmp(output, "/full/path/to/foo.bar");
-
-    mu_assert("getPath should return path", result == 0);
-    return 0;
-}
-
 static char * test_item_create() {
     model *MODEL = beforeEach("item_create");
 
-    char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
-    char *filenameTwo = "rai.exe";
     char *pathTwo = "/some/other/path/to/rai.exe";
-    char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = item_create(filename);
-    fileListItem *second = item_create(filenameTwo);
-    fileListItem *third = item_create(filenameThree);
+    fileListItem *first = item_create(0, path);
+    fileListItem *second = item_create(1, pathTwo);
+    fileListItem *third = item_create(2, pathThree);
 
     mu_assert("file list item should be created successfully", first != NULL);
     mu_assert("first file list item should have id of 0", first->id == 0);
-    mu_assert("first file list item should have correct name", first->data->name = "foo.bar");
-    mu_assert("first file list item should have correct path", first->data->path == "/full/path/to/foo.bar");
+    mu_assert("first file list item should have correct path", first->path == "/full/path/to/foo.bar");
     mu_assert("second file list item should be created successfully", second != NULL);
     mu_assert("second file list item should have id of 1", second->id == 1);
-    mu_assert("second file list item should have correct name", second->data->name = "rai.exe");
-    mu_assert("second file list item should have correct path", second->data->path == "/some/other/path/to/rai.exe");
+    mu_assert("second file list item should have correct path", second->path == "/some/other/path/to/rai.exe");
     mu_assert("third file list item should be created successfully", third  != NULL);
     mu_assert("third file list item should have id of 2", third->id == 2);
-    mu_assert("third file list item should have correct name", third->data->name = "feelings");
-    mu_assert("third file list item should have correct path", third->data->path == "/trash/feelings");
+    mu_assert("third file list item should have correct path", third->path == "/trash/feelings");
 
     return 0;
 }
@@ -196,16 +145,13 @@ static char * test_item_create() {
 static char * test_item_add() {
     model *MODEL = beforeEach("item_add");
 
-    char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
-    char *filenameTwo = "rai.exe";
     char *pathTwo = "/some/other/path/to/rai.exe";
-    char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = item_create(filename);
-    fileListItem *second = item_create(filenameTwo);
-    fileListItem *third = item_create(filenameThree);
+    fileListItem *first = item_create(0, path);
+    fileListItem *second = item_create(1, pathTwo);
+    fileListItem *third = item_create(2, pathThree);
 
     item_add(first);
     item_add(second);
@@ -213,34 +159,92 @@ static char * test_item_add() {
 
     mu_assert("first item should be added", MODEL->LIST->first != NULL);
     mu_assert("first item should be added with correct id", MODEL->LIST->first != NULL);
-    mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->data->name, "rai.exe") == 0);
+    mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->path, "rai.exe") == 0);
     mu_assert("third item should be accessible from second item", MODEL->LIST->first->next->next->id == 2);
-    mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->data->name, "feelings") == 0);
+    mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->path, "feelings") == 0);
     mu_assert("count should be correct", MODEL->LIST->count == 3);
-    mu_assert("MODEL->LIST.last should point to last item", MODEL->LIST->last->id == 2);
     mu_assert("MODEL->LIST.first should point to first item", MODEL->LIST->first->id == 0);
 }
 
-static char * test_printFileList() {
+static char *test_item_remove()
+{
+    model *MODEL = beforeEach("item_add");
+
+    char *path = "/full/path/to/foo.bar";
+    char *pathTwo = "/some/other/path/to/rai.exe";
+    char *pathThree = "/trash/feelings";
+
+    fileListItem *first = item_create(0, path);
+    fileListItem *second = item_create(1, pathTwo);
+    fileListItem *third = item_create(2, pathThree);
+
+    item_add(first);
+    item_add(second);
+    item_add(third);
+
+    mu_assert("write test for remove", false);
+    mu_assert("first item should be added", MODEL->LIST->first != NULL);
+    mu_assert("first item should be added with correct id", MODEL->LIST->first != NULL);
+    mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->path, "rai.exe") == 0);
+    mu_assert("third item should be accessible from second item", MODEL->LIST->first->next->next->id == 2);
+    mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->path, "feelings") == 0);
+    mu_assert("count should be correct", MODEL->LIST->count == 3);
+    mu_assert("MODEL->LIST.first should point to first item", MODEL->LIST->first->id == 0);
+}
+
+static char * test_list_print() {
     
     model *MODEL = beforeEach("Print File List");
 
-    char *filename = "foo.bar";
     char *path = "/full/path/to/foo.bar";
-    char *filenameTwo = "rai.exe";
     char *pathTwo = "/some/other/path/to/rai.exe";
-    char *filenameThree = "feelings";
     char *pathThree = "/trash/feelings";
 
-    fileListItem *first = item_create(filename);
-    fileListItem *second = item_create(filenameTwo);
-    fileListItem *third = item_create(filenameThree);
+    fileListItem *first = item_create(0, path);
+    fileListItem *second = item_create(1, pathTwo);
+    fileListItem *third = item_create(2, pathThree);
 
     item_add(first);
     item_add(second);
     item_add(third);
 
     mu_assert("printFileList should return 0", printFileList(MODEL->LIST) == 0);
+    return 0;
+}
+
+static char *test_list_last()
+{
+
+    model *MODEL = beforeEach("item_add");
+
+    char *path = "/full/path/to/foo.bar";
+    char *pathTwo = "/some/other/path/to/rai.exe";
+    char *pathThree = "/trash/feelings";
+
+    fileListItem* result;
+
+    fileListItem *first = item_create(0, path);
+    fileListItem *second = item_create(1, pathTwo);
+    first->next = second;
+    fileListItem *third = item_create(2, pathThree);
+    second->next = third;
+    third->next = (fileListItem *) 0;
+
+    fileList *testList = malloc(sizeof(fileList));
+    testList->first = first;
+    testList->count = 3;
+
+    result = list_last(testList);
+
+    mu_assert("last file should return 3rd (test: id)", result->id = 2);
+    mu_assert("last file should return 3rd (test: path)", strcmp(result->path, "/trash/feelings") == 0);
+    return 0;
+}
+
+static char *test_list_first()
+{
+
+    mu_assert("write a test for list_first", false);
     return 0;
 }
 
@@ -343,11 +347,13 @@ static char * all_tests () {
     mu_run_test(test_isRoot);
     mu_run_test(test_isLeaf);
     mu_run_test(test_configure);
-    mu_run_test(test_getPath);
-    mu_run_test(test_getFilename);
     mu_run_test(test_item_create);
+    mu_run_test(test_list_last);
+    mu_run_test(test_list_first);
     mu_run_test(test_item_add);
-    mu_run_test(test_printFileList);
+    mu_run_test(test_item_remove);
+    mu_run_test(test_list_print);
+    mu_run_test(test_insertNode);
     mu_run_test(test_getDirectoryContents);
     mu_run_test(test_printInstructions);
     mu_run_test(test_parseInput);

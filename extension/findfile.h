@@ -6,7 +6,7 @@
 // wrapper for file data so that it can be used in the binary search tree
 typedef struct Node 
 {
-  struct FileInfo *data; // contains the filename and path
+  char *path; // path + file name
   struct Node *leftChild; // reference to left child, if any 
   struct Node *rightChild; // reference to right child, if any
   struct Node *parent; // reference to the parent node, if not the root node.
@@ -40,10 +40,10 @@ bool isRoot(node *input);
 bool isLeaf(node *input); 
 
 // returns the filename of a specific file 
-char *getFilename(fileInfo *input, char *output);
+char *getFilename(char *input, char *output);
 
 // gets the full path of a specific file
-char *getPath(fileInfo *input, char *output);
+char *getPath(char *input, char *output);
 
 // initializes model 
 model *configure (char *query, char *directory);
@@ -69,7 +69,7 @@ void printInstructions (void);
 int parseInput (char *input); 
 
 // Wraps file data in a node object (without any references to parents etc)
-node *createNode(fileInfo *input, node *output);
+node *createNode(char *input, node *output);
 
 /** 
  *  inserts a node in the right position in a tree
