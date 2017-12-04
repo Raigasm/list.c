@@ -25,11 +25,6 @@ fileListItem *item_add(fileListItem *input, fileList *output)
   output->count++;
 }
 
-void *item_remove(int id)
-{
-  DEBUG_PRINT("not yet implemented :X\n");
-}
-
 // list functions
 void list_print(fileList *input)
 {

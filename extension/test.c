@@ -112,8 +112,8 @@ static char *test_configure()
     mu_assert("DIRECTORY should be set properly", strcmp("test_files", MODEL->DIRECTORY) == 0);
     mu_assert("ALGORITHM should be set properly", MODEL->ALGORITHM == 0);
     mu_assert("LIST should be set properly", MODEL->LIST != NULL);
-    mu_assert("TREE  should be set properly", MODEL->TREE != NULL);
-    mu_assert("COUNT  should be set properly", MODEL->COUNT == 0);
+    mu_assert("TREE should be set properly", MODEL->TREE != NULL);
+    mu_assert("COUNT should be set properly", MODEL->COUNT == 0);
     
     return 0;
 }
@@ -162,32 +162,6 @@ static char * test_item_add() {
     mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->path, "/some/other/path/to/rai.exe") == 0);
     mu_assert("third item should be accessible from second item", MODEL->LIST->first->next->next->id == 2);
     mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->path, "/trash/feelings") == 0);
-    mu_assert("count should be correct", MODEL->LIST->count == 3);
-    mu_assert("MODEL->LIST.first should point to first item", MODEL->LIST->first->id == 0);
-}
-
-static char *test_item_remove()
-{
-    model *MODEL = beforeEach("item_add");
-
-    char *path = "/full/path/to/foo.bar";
-    char *pathTwo = "/some/other/path/to/rai.exe";
-    char *pathThree = "/trash/feelings";
-
-    fileListItem *first = item_create(0, path);
-    fileListItem *second = item_create(1, pathTwo);
-    fileListItem *third = item_create(2, pathThree);
-
-    item_add(first, MODEL->LIST);
-    item_add(second, MODEL->LIST);
-    item_add(third, MODEL->LIST);
-
-    mu_assert("write test for remove", false);
-    mu_assert("first item should be added", MODEL->LIST->first != NULL);
-    mu_assert("first item should be added with correct id", MODEL->LIST->first != NULL);
-    mu_assert("second item should be accessible from first item", MODEL->LIST->first->next->id == 1 && strcmp(MODEL->LIST->first->next->path, "/some/other/path/to/rai.exe") == 0);
-    mu_assert("third item should be accessible from second item", MODEL->LIST->first->next->next->id == 2);
-    mu_assert("third item should have correct data", strcmp(MODEL->LIST->first->next->next->path, "feelings") == 0);
     mu_assert("count should be correct", MODEL->LIST->count == 3);
     mu_assert("MODEL->LIST.first should point to first item", MODEL->LIST->first->id == 0);
 }
