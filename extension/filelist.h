@@ -19,7 +19,7 @@ typedef struct FileList
 
 // item functions
 fileListItem *item_create(int id, char *name);
-fileListItem *item_add(fileListItem *input);
+fileListItem *item_add(fileListItem *input, fileList *output);
 void *item_remove(int id);
 
 // list functions

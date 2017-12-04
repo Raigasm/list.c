@@ -13,9 +13,16 @@ fileListItem *item_create(int id, char *name)
   return output;
 }
 
-fileListItem *item_add(fileListItem *input)
+fileListItem *item_add(fileListItem *input, fileList *output)
 {
-  DEBUG_PRINT("not yet implemented :X\n");
+  if(output->count == 0){
+    output->first = input;
+  } else {
+    fileListItem *currentLast = list_last(output);
+    currentLast->next = input;
+  }
+
+  output->count++;
 }
 
 void *item_remove(int id)
@@ -45,7 +52,7 @@ fileListItem *list_last(fileList *input)
 
 fileListItem *list_first(fileList *input)
 {
-  DEBUG_PRINT("not yet implemented :X\n");
+  return input->first;
 }
 
 int list_count(fileList *input)
