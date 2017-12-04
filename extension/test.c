@@ -245,6 +245,25 @@ static char *test_list_first()
     return 0;
 }
 
+
+static char * test_node_compare() {
+    node *a = malloc(sizeof(node));
+    node *b = malloc(sizeof(node));
+    node *c = malloc(sizeof(node));
+
+    a->path = "alpha";
+    b->path = "bravo";
+    c->path = "charlie";
+
+    DEBUG_PRINT("a/b comparison = %i\n", node_compare(a,b));
+
+    mu_assert("compare should return -1 for greater b", node_compare(a,b) == -1);
+    mu_assert("compare should return 1 for greater b", node_compare(b,a) == 1);
+    mu_assert("compare should return 1 for greater b (again)", node_compare(c,a) == 1);
+    mu_assert("compare should return 1 for greater b (again #2)", node_compare(c,b) == 1);
+    mu_assert("compare should return 0 if equal", node_compare(a,a) == 0);
+}
+
 static char * test_directory_get()
 {
     model *MODEL = beforeEach("getDirectoryContents");
@@ -349,6 +368,7 @@ static char * all_tests () {
     mu_run_test(test_list_first);
     mu_run_test(test_item_add);
     mu_run_test(test_list_print);
+    mu_run_test(test_node_compare);
     mu_run_test(test_insertNode);
     mu_run_test(test_directory_get);
     mu_run_test(test_printInstructions);

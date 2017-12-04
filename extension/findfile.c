@@ -80,6 +80,15 @@ node *node_create(char *input)
   return 0;
 }
 
+
+// compare a new node 'b' with an existing node 'a'
+// if 'b' is less then returns -1 
+// if 'b' is more then returns 1
+// if equal then returns 0
+int node_compare(node *a, node *b){
+  return strcmp(a->path, b->path);
+}
+
 /** inserts a node in the right position in a tree
  *  sets parent/children appropriately for the new node
  *  updates children for the parent node, if any
@@ -88,6 +97,11 @@ node *node_create(char *input)
  **/
 int node_insert(node *input, binarySearchTree *output)
 {
+  // check if root exists
+  // if root doesn't exist, create root
+  // SEE  https://en.wikipedia.org/wiki/Binary_search_tree#Operations#Insertion
+  // update size
+
   return 0;
 }
 
